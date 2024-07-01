@@ -24,7 +24,7 @@
           :class="{ active: index === activeIndexSlide }"
           v-for="(slide, index) in slides"
           :key="index"
-          @click="goToSlide(index)" @mouseover="goToSlide(index)"
+          @mouseover="goToSlide(index)"
         >
           <img :src="slide.image" :alt="slide.title" />
         </div>
@@ -80,7 +80,6 @@ export default {
   height: 100%;
   object-fit: cover;
   border: 3px solid $secondary-gold;
-
 }
 
 .item .text {
@@ -102,6 +101,7 @@ export default {
 .thumb {
   width: calc((100%) / 5);
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .thumb img {
