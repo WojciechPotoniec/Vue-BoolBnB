@@ -1,13 +1,15 @@
 <template>
-  
+  <AppHome />
 </template>
 
 <script>
-  export default {
-    name: 'App'
-  }
+import AppHome from "./pages/AppHome.vue";
+export default {
+  name: "App",
+  components: {
+    AppHome,
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
