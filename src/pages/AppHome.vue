@@ -1,14 +1,15 @@
 <template>
-    
+    <HeaderComponent />
 </template>
 
 <script>
-    export default {
-        name: 'AppHome',
-        
-    }
+import HeaderComponent from "../components/HeaderComponent.vue";
+export default {
+  name: "AppHome",
+  components: {
+    HeaderComponent,
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
