@@ -1,5 +1,5 @@
 <template>
-    
+    AboutComponent
 </template>
 
 <script>
