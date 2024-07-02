@@ -4,7 +4,7 @@
       <div class="d-flex">
         <div id="logo">
           <img
-            src="https://cdn.discordapp.com/attachments/1257278343816937492/1257278438281187390/logo.png?ex=6683d34a&is=668281ca&hm=744f70d77c5c9baf00d511295b5a67327a2017db70c7b3b4b3b5be11cc8343b1"
+            :src="logo"
             alt="Logo">
         </div>
         
@@ -43,6 +43,7 @@ export default {
   name: "HeaderComponent",
   data() {
     return {
+      logo: "../public/img/logo.png",
       links: [
         {
           label: "Home",
