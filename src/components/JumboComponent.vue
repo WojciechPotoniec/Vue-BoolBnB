@@ -4,11 +4,19 @@
             <img v-for="(image, index) in images" :key="index" :src="image" :alt="'Image ' + (index + 1)" :class="{ active: index === currentImageIndex }">
         </div>
     </div>
+    <div id="searchbar-container">
+        <SearchbarComponent />
+    </div>
 </template>
 
 <script>
+import SearchbarComponent from './SearchbardComponent.vue';
+
 export default {
     name: 'JumboComponent',
+    components: {
+        SearchbarComponent
+    },
     data() {
         return {
             images: [
