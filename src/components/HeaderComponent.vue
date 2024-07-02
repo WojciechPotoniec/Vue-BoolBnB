@@ -57,6 +57,10 @@ export default {
           label: "Chi Siamo",
           routeName: "about",
         },
+        {
+          label: "Show Component",
+          routeName: "show",
+        }
         // {
         //   label: "Login",
         //   routeName: "login",
