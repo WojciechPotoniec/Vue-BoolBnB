@@ -1,5 +1,5 @@
 <template>
-    
+    ContactComponent
 </template>
 
 <script>
