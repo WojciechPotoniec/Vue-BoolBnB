@@ -2,10 +2,12 @@
   <div class="container stack">
     <div class="card">
       <div class="image">
-        <!-- Place image here -->
+        <img src="https://picsum.photos/seed/picsum/200/200" class="card-img-top" alt="picsum alt" />
         <div class="text">appartment title</div>
       </div>
-      <p>description</p>
+      <div class="card-body">
+        <p>description</p>
+      </div>
     </div>
   </div>
 </template>
@@ -40,10 +42,11 @@ img {
 }
 
 .card {
+  color: $white;
   aspect-ratio: 3 / 2;
   border: 2px solid $secondary-gold;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: rgba($primary-bg, 0.80);
   position: relative;
   transition: 0.15s ease;
   cursor: pointer;
@@ -55,9 +58,13 @@ img {
     position: absolute;
     height: 100%;
     width: 100%;
-    border: 2px solid $secondary-gold;;
+    border: 2px solid $secondary-gold;
     border-radius: 10px;
-    background-color: #fff;
+    background-image: url("https://picsum.photos/seed/picsum/200/200");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.75;
     transform-origin: center center;
     z-index: -1;
     transition: 0.15s ease;
@@ -80,8 +87,10 @@ img {
   // background-color: #EEE;
   aspect-ratio: 1 / 1;
   position: relative;
+  overflow: hidden;
 }
 .text {
+  color: $white;
   position: absolute;
   bottom: 0;
   right: 0;
