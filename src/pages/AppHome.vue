@@ -1,8 +1,6 @@
 <template>
-    <HeaderComponent />
-    <JumboComponent />
-    <MainComponent />
-    <FooterComponent />
+  <JumboComponent />
+  <MainComponent />
 </template>
 
 <script>
