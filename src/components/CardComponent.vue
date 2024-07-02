@@ -28,7 +28,8 @@ img {
 
 .stack {
   width: 85%;
-  max-width: 250px;
+  max-width: 300px;
+  padding: 30px;
   transition: 0.25s ease;
   &:hover {
     transform: rotate(5deg);
@@ -82,7 +83,7 @@ img {
 }
 .image {
   width: 100%;
-  border: 2px solid $secondary-gold;
+  // border: 2px solid $secondary-gold;
   border-radius: 10px;
   // background-color: #EEE;
   aspect-ratio: 1 / 1;
