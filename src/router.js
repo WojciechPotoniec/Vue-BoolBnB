@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AppHome from './pages/AppHome.vue';
 import ContactComponent from './pages/ContactComponent.vue';
 import AboutComponent from './pages/AboutComponent.vue';
+import ShowComponent from './pages/ShowComponent.vue';
 
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
             path: '/about',
             name: 'about',
             component: AboutComponent,
+        },
+        {
+            path: '/show', //* da modificare con id per richiamare il dettaglio // 
+            name: 'show',
+            component: ShowComponent,
         },
         // {
         //     path: '/http://127.0.0.1.8000/login',
