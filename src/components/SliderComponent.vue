@@ -41,19 +41,19 @@ export default {
       //* array di prova */
       slides: [
         {
-          image: "https://picsum.photos/seed/picsum/200/200",
+          image: "https://picsum.photos/200/200",
         },
         {
-          image: "https://picsum.photos/seed/picsum/200/200",
+          image: "https://picsum.photos/200/200",
         },
         {
-          image: "https://picsum.photos/seed/picsum/200/200",
+          image: "https://picsum.photos/200/200",
         },
         {
-          image: "https://picsum.photos/seed/picsum/200/200",
+          image: "https://picsum.photos/200/200",
         },
         {
-          image: "https://picsum.photos/seed/picsum/200/200",
+          image: "https://picsum.photos/200/200",
         },
       ],
       activeIndexSlide: 0,
@@ -96,6 +96,8 @@ export default {
   height: 100%;
   object-fit: cover;
   border: 3px solid $secondary-gold;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
 }
 
 .item .text {
