@@ -34,12 +34,28 @@
 </template>
 
 <script>
-import { slides } from "../data";
 export default {
   name: "CardComponent",
   data() {
     return {
-      slides,
+      //* array di prova */
+      slides: [
+        {
+          image: "https://picsum.photos/seed/picsum/200/200",
+        },
+        {
+          image: "https://picsum.photos/seed/picsum/200/200",
+        },
+        {
+          image: "https://picsum.photos/seed/picsum/200/200",
+        },
+        {
+          image: "https://picsum.photos/seed/picsum/200/200",
+        },
+        {
+          image: "https://picsum.photos/seed/picsum/200/200",
+        },
+      ],
       activeIndexSlide: 0,
       autoPlayId: null,
     };
