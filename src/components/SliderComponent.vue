@@ -1,6 +1,6 @@
 <template>
-  <div class="container pt-5 pb-5">
-    <div id="slider-title" class="px-5 mb-4">
+  <div class="container pt-5 pb-5 mt-5">
+    <div id="slider-title" class="px-5 mb-4 mt-3">
       <h2>
         {{ slides[activeIndexSlide].title }}
         Title
@@ -73,12 +73,16 @@
 </template>
 
 <script>
+import {store} from "../store";
 export default {
   name: "CardComponent",
   components: {
   },
   data() {
     return {
+      store: {
+        apiKey: store.apiKey
+      },
       //* array di prova */
       slides: [
         {
@@ -126,7 +130,7 @@ export default {
         const mapElement = document.getElementById('map');
         if (mapElement) {
           // Chiave API di TomTom Maps
-          const apiKey = 'asaWBwoExgAHW5YiZqt39Vw8NtJFJwaF';
+          const apiKey = this.store.apiKey;
 
           try {
             // Crea la mappa all'interno del div con id 'map'
