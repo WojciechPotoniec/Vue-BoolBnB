@@ -83,6 +83,10 @@ header {
   top: 0; 
   z-index: 5000;
   transition: all 0.3s ease-in-out;
+  img{
+    width: 100%;
+    height: 90px;
+  }
   
   &.fixed-header {
     width: 70%;
@@ -90,17 +94,16 @@ header {
     border-radius: 20px;  
     margin: 0 15%;
     top: 10px;
-    height: 80px;
+    height: 100px;
+    & img {
+      height: 80%;
+    }
   }
   
   #logo {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    img {
-      height: 60px;
-    }
   }
 }
 
