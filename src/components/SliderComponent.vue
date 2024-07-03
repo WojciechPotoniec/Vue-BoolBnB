@@ -37,28 +37,45 @@
           <span>{{ slides[activeIndexSlide].rating }} .ratings</span>
         </p>
         </p>
-        <div id="host" class="p-4 border-top">
-          img
-          <img :src="slides[activeIndexSlide].hostImage" :alt="slides[activeIndexSlide].hostName" />
-          <p>{{ slides[activeIndexSlide].hostName }} host name</p>
+        <div id="host" class="p-4 border-top border-bottom">
+          <h3>Host</h3>
+          <img class="host-image" :src="slides[activeIndexSlide].hostImage" :alt="slides[activeIndexSlide].hostName" />
+          <p>{{ slides[activeIndexSlide].hostName }} host name
+          <p>{{ slides[activeIndexSlide].hostDescription }} host description</p>
+          </p>
         </div>
-
+        <div id="slider-services" class="border-bottom p-4">
+          <h3>Servizzi</h3>
+          <ul class="d-flex">
+            <li><i class="fa-solid fa-wifi"></i></li>
+            <li class="mx-3">Wifi{{ slides[activeIndexSlide].wifi }}
+            </li>
+          </ul>
+          <ul class="d-flex">
+            <li><i class="fa-solid fa-square-parking"></i></li>
+            <li class="ms-3">Parking{{ slides[activeIndexSlide].parking }}
+            </li>
+          </ul>
+          <ul class="d-flex">
+            <li><i class="fa-solid fa-person-swimming"></i></li>
+            <li class="ms-3">Pool{{ slides[activeIndexSlide].pool }}
+            </li>
+          </ul>
+        </div>
       </div>
-
-      <div id="slider-reservation">
-        <ReservationComponent />
+      <div id="slider-map">
+        <h3 class="p-4">Dove sarai</h3>
+        <div id="map" class="p-4">
+        </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import ReservationComponent from "./ReservationComponent.vue";
 export default {
   name: "CardComponent",
   components: {
-    ReservationComponent,
   },
   data() {
     return {
@@ -102,7 +119,49 @@ export default {
     goToSlide(index) {
       this.activeIndexSlide = index;
     },
+    showMap() {
+      // Funzione per inizializzare la mappa
+      const initMap = () => {
+        // Verifica che l'elemento con id "map" esista
+        const mapElement = document.getElementById('map');
+        if (mapElement) {
+          // Chiave API di TomTom Maps
+          const apiKey = 'asaWBwoExgAHW5YiZqt39Vw8NtJFJwaF';
+
+          try {
+            // Crea la mappa all'interno del div con id 'map'
+            let map = tt.map({
+              key: apiKey,
+              container: 'map',
+              center: [9.6629, 45.6945], // Centro della mappa (Bergamo)
+              zoom: 15 // Livello di zoom iniziale
+            });
+
+            // Aggiunge un marker per la via Borgo Palazzo 132A, Bergamo
+            let marker = new tt.Marker({ color: '#D98B2C' })
+              .setLngLat([9.6629, 45.6945]) // Longitudine, latitudine
+              .setPopup(new tt.Popup().setHTML("<h3>Via Borgo Palazzo 132A, Bergamo</h3>"))
+              .addTo(map);
+
+            // Aggiunge i controlli di zoom alla mappa
+            map.addControl(new tt.NavigationControl());
+          } catch (error) {
+            console.error('Errore durante l\'inizializzazione della mappa:', error);
+          }
+        }
+      };
+
+      // Esegui l'inizializzazione della mappa quando il DOM è pronto
+      if (document.readyState === 'complete') {
+        initMap();
+      } else {
+        window.addEventListener('load', initMap);
+      }
+    }
   },
+  mounted() {
+    this.showMap();
+  }
 };
 </script>
 
@@ -180,6 +239,34 @@ export default {
 }
 
 #slider-info {
-  width: 65%;
+  width: 90%;
+}
+
+#host {
+  img {
+    width: 60px;
+    height: 60px;
+    background-color: black;
+    border-radius: 50%;
+  }
+}
+
+#slider-services {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+#slider-map {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  #map {
+    width: 90%;
+    height: 400px;
+  }
 }
 </style>
