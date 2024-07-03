@@ -4,6 +4,7 @@ import AppHome from './pages/AppHome.vue';
 import ContactComponent from './pages/ContactComponent.vue';
 import AboutComponent from './pages/AboutComponent.vue';
 import ShowComponent from './pages/ShowComponent.vue';
+import ResultComponent from './pages/ResultComponent.vue';
 
 
 const router = createRouter({
@@ -29,6 +30,11 @@ const router = createRouter({
             name: 'show',
             component: ShowComponent,
         },
+        {
+            path: '/results',
+            name: 'results',
+            component: ResultComponent,
+        }
         // {
         //     path: '/http://127.0.0.1.8000/login',
         //     name: 'login',
