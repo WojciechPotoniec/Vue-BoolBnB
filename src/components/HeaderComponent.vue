@@ -1,13 +1,10 @@
 <template>
-  <header>
-    <div class="d-flex justify-content-between">
+  <header :class="{ 'fixed-header': isFixed }">
+    <div class="d-flex justify-content-between" id="header-nav">
       <div class="d-flex">
         <div id="logo">
-          <img
-            :src="logo"
-            alt="Logo">
+          <img :src="logo" alt="Logo">
         </div>
-        
         <div id="header_links" class="d-flex">
           <ul>
             <li v-for="(link, index) in links" :key="index">
@@ -18,15 +15,14 @@
           </ul>
         </div>
       </div>
-
-      <div id="header_logins" class="d-flex ">
+      <div id="header_logins" class="d-flex">
         <ul>
           <li>
             <a href="http://localhost:8000/login" class="nav-link">
               <span>Login</span>
             </a>
           </li>
-          <li class="">
+          <li>
             <a href="http://localhost:8000/register" class="nav-link">
               <span>Registrati</span>
             </a>
@@ -34,9 +30,9 @@
         </ul>
       </div>
     </div>
-
   </header>
 </template>
+
 
 <script>
 export default {
@@ -45,80 +41,83 @@ export default {
     return {
       logo: "../public/img/logo.png",
       links: [
-        {
-          label: "Home",
-          routeName: "home",
-        },
-        {
-          label: "Contattaci",
-          routeName: "contact",
-        },
-        {
-          label: "Chi Siamo",
-          routeName: "about",
-        },
-        {
-          label: "Show Component",
-          routeName: "show",
-        }
-        // {
-        //   label: "Login",
-        //   routeName: "login",
-        // },
-        // {
-        //   label: "Registrati",
-        //   routeName: "register",
-        // },
+        { label: "Home", routeName: "home" },
+        { label: "Contattaci", routeName: "contact" },
+        { label: "Chi Siamo", routeName: "about" },
+        { label: "Show Component", routeName: "show" }
       ],
+      isFixed: false, // Stato per tracciare se l'header è fisso
     };
   },
+  methods: {
+    handleScroll() {
+      // Controlla se la pagina è stata scrollata più di 50px
+      this.isFixed = window.scrollY > 50;
+    },
+  },
+  mounted() {
+    // Aggiungi un listener per l'evento di scroll quando il componente è montato
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed() {
+    // Rimuovi il listener per l'evento di scroll quando il componente è distrutto
+    window.removeEventListener('scroll', this.handleScroll);
+  }
 };
 </script>
+
 
 <style lang="scss" scoped>
 @import '../assets/styles/partials/variables.scss';
 
+#header-nav {
+  height: 100px;
+  width: 100%;
+}
+
 header {
   background-color: $primary-bg;
   width: 100%;
-  height: 90px;
+  height: 100px;
+  position: fixed;
+  top: 0; 
+  z-index: 5000;
+  transition: all 0.3s ease-in-out;
+  
+  &.fixed-header {
+    width: 70%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 20px;  
+    margin: 0 15%;
+    top: 10px;
+  }
+  
+  #logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 60px;
+    }
+  }
 }
 
-.debug {
-  border: 2px solid black;
-}
-
-#header_links {
+#header_links, #header_logins {
   ul {
     list-style-type: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 5%;
+    margin: 0;
+    padding: 0;
 
     li {
       padding: 0 0.5rem;
       margin: 0 0.5rem;
       color: $secondary-gold;
-
-    }
-  }
-}
-
-#header_logins {
-  ul {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5%;
-    margin-right: 5%;
-    color: $secondary-gold;
-
-    li {
-      padding: 0 0.5rem;
-      margin: 0 0.5rem;
     }
   }
 }
 </style>
+
