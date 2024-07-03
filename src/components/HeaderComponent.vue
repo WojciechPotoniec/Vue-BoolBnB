@@ -90,6 +90,7 @@ header {
     border-radius: 20px;  
     margin: 0 15%;
     top: 10px;
+    height: 80px;
   }
   
   #logo {
