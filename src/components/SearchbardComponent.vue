@@ -54,13 +54,14 @@ export default {
         return;
       }
       // Replace with your API endpoint URL
-      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${this.store.apiKey}`;      try {
+      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${this.store.apiKey}`;     
+       try {
         const response = await fetch(url);
         const data = await response.json();
         this.searchResults = data.apartments; // Assuming data structure has apartments key
 
         // Redirect to results page with search results data
-        this.$router.push({ path: '/results', query: this.searchQuery });
+        this.$router.push({ path: '/results', query: this.searchQuery.destination });
       } catch (error) {
         console.error('Errore durante la ricerca:', error);
       }
