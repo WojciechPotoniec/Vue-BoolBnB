@@ -7,13 +7,13 @@
             v-model="searchQuery.destination">
         </div>
         <div>
-          <label for="checkin">Data Check-in</label>
-          <input type="date" class="form-control" placeholder="Aggiungi data" v-model="searchQuery.checkin">
-        </div>
-        <div>
-          <label for="checkout">Data Check-out</label>
-          <input type="date" class="form-control" placeholder="Aggiungi data" v-model="searchQuery.checkout">
-        </div>
+          <select name="" id="" v-model="radius">
+            <option value="20">20 km</option>
+            <option value="25">25 km</option>
+            <option value="30">30 km</option>
+          </select>
+          
+          </div>
         <div>
           <label for="guests">Ospiti</label>
           <input type="text" aria-label="Guests" class="form-control" placeholder="Aggiungi ospiti"
@@ -27,24 +27,26 @@
 
 
 <script>
+import axios from 'axios';
 import { store } from '../store';
 import { router } from '../router';
+import { TOMTOM_API_KEY } from '../../config';
 
 export default {
   name: 'SearchbarComponent',
   data() {
     return {
-      store: {
-        apiKey: store.apiKey
-      },
       router: router,
       searchQuery: {
         destination: '',
-        checkin: '',
-        checkout: '',
-        guests: ''
+      
       },
-      searchResults: []
+      params: {
+      radius: '',
+      latitude: '',
+      longitude: '',},
+    
+      result: []
     };
   },
   methods: {
@@ -54,17 +56,22 @@ export default {
         return;
       }
       // Replace with your API endpoint URL
-      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${this.store.apiKey}`;     
+      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${TOMTOM_API_KEY}`;
+      // console.log(url);   
        try {
         const response = await fetch(url);
         const data = await response.json();
-        this.searchResults = data.apartments; // Assuming data structure has apartments key
-
+        this.latitude = data.results[0].position.lat;
+        this.longitude = data.results[0].position.lon;
+        this.result = data.results;
+        // console.log(this.longitude);
         // Redirect to results page with search results data
         this.$router.push({ path: '/results', query: this.searchQuery.destination });
       } catch (error) {
         console.error('Errore durante la ricerca:', error);
       }
+      const myurl = `${store.apiBaseUrl}/apartments?lat=${this.latitude}&lon=${this.longitude}&radius=${this.radius}`
+      console.log(myurl)
     }
   },
   
