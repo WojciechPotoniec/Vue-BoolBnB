@@ -26,8 +26,8 @@ const router = createRouter({
             component: AboutComponent,
         },
         {
-            path: '/show', //* da modificare con id per richiamare il dettaglio // 
-            name: 'show',
+            path: '/apartments/:slug', //* da modificare con id per richiamare il dettaglio // 
+            name: 'apartment',
             component: ShowComponent,
         },
         {
