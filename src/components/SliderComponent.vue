@@ -47,7 +47,12 @@
           <p>{{ slides[activeIndexSlide].hostDescription }} host description</p>
           </p>
         </div> -->
-
+        <ul class="list-unstyled p-4">
+          <li><b>Number of rooms:</b> {{ item.rooms_num }}</li>
+          <li><b>Number of beds:</b> {{ item.beds_num }}</li>
+          <li><b>Number of bathrooms:</b> {{ item.bathrooms_num }}</li>
+          <li><b>Squale meters:</b> {{ item.square_meters }}</li>
+        </ul>
         <!-- //** SERVIZI */ -->
         <div id="slider-services" class="border-bottom p-4">
           <h3>Servizi</h3>
