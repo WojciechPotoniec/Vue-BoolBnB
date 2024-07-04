@@ -1,37 +1,12 @@
 <template>
-  <div class="mt-5 pt-5">
-     {{ apartment.title }} 
-  </div>
-  <div>
-     {{ apartment.address }} 
-  </div>
-  <div>
-     {{ apartment.bathrooms_num }} 
-  </div>
-  <div>
-     {{ apartment.beds_num }} 
-  </div>
-  <div>
-     {{ apartment.rooms_num }} 
-  </div>
-  <div>
-     {{ apartment.latitude }} 
-  </div>
-  <div>
-     {{ apartment.longitude }} 
-  </div>
-  <div>
-     {{ apartment.visibility }}
-  </div>
-
   <div class="container pt-5 pb-5 mt-5">
-    <!-- <div id="slider-title" class="px-5 mb-4 mt-3">
+    <div id="slider-title" class="px-5 mb-4 mt-3">
       <h2>
-        {{ apartment.title }}
+        {{ item.title }}
       </h2>
-    </div> -->
+    </div>
     <div id="slider">
-      <!-- <div
+      <div
         class="slider-wrapper"
         tabindex="0"
         @keyup.up="prevSlide"
@@ -39,7 +14,7 @@
       >
         <div class="item">
           <img
-            src="https://picsum.photos/200/200"
+            :src="slides[activeIndexSlide].image"
             :alt="slides[activeIndexSlide].title"
           />
           <div class="text">
@@ -60,11 +35,11 @@
             <img :src="slide.image" :alt="slide.title" />
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
     <div id="slider-content" class="d-flex container mt-3">
       <div id="slider-info">
-        <!-- <p class="address p-4 fs-4">{{ apartment.address }}</p> -->
+        <p class="address p-4 fs-4">{{ item.address }}</p>
         <!-- <div id="host" class="p-4 border-top border-bottom">
           <h3>Host</h3>
           <img class="host-image" :src="slides.hostImage" :alt="slides[activeIndexSlide].hostName" />
@@ -74,24 +49,15 @@
         </div> -->
 
         <!-- //** SERVIZI */ -->
-        <!-- <div id="slider-services" class="border-bottom p-4">
+        <div id="slider-services" class="border-bottom p-4">
           <h3>Servizi</h3>
-          <ul class="d-flex">
-            <li><i class="fa-solid fa-wifi"></i></li>
-            <li class="mx-3">Wifi{{ apartment.services[0].name }}
-            </li>
-          </ul>
-          <ul class="d-flex">
-            <li><i class="fa-solid fa-square-parking"></i></li>
-            <li class="ms-3">Parking{{ slides[activeIndexSlide].parking }}
-            </li>
-          </ul>
-          <ul class="d-flex">
-            <li><i class="fa-solid fa-person-swimming"></i></li>
-            <li class="ms-3">Pool{{ slides[activeIndexSlide].pool }}
-            </li>
-          </ul>
-        </div> -->
+          <div v-for="(item, index) in item.services" :key="index">
+            <ul class="d-flex">
+              <li><i :class="item.icon"></i></li>
+              <li class="mx-3">{{ item.name }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div id="slider-map">
         <h3 class="p-4">Dove sarai</h3>
@@ -107,6 +73,7 @@ import axios from "axios";
 import { TOMTOM_API_KEY } from "../../config";
 export default {
   name: "CardComponent",
+  props: ["item"],
   data() {
     return {
       store,
@@ -114,19 +81,19 @@ export default {
       //* array di prova */
       slides: [
         {
-          image: "public/img/appartamento_480.jpg",
+          image: "/public/img/appartamento1.jpg",
         },
         {
-          image: "public/img/appartamento2_480.jpg",
+          image: "/public/img/appartamento2.jpg",
         },
         {
-          image: "public/img/appartamento3_360.jpg",
+          image: "/public/img/appartamento3.jpg",
         },
         {
-          image: "public/img/salotto_720.jpg",
+          image: "/public/img/salotto.jpg",
         },
         {
-          image: "public/img/letto.jpg",
+          image: "/public/img/letto.jpg",
         },
       ],
       activeIndexSlide: 0,
@@ -195,32 +162,9 @@ export default {
         window.addEventListener("load", initMap);
       }
     },
-    getApartment() {
-      console.log(this.$route);
-      axios
-        .get(`${this.store.apiBaseUrl}/apartments/${this.$route.params.slug}`)
-        .then((res) => {
-          console.log(res.data.result, "ciao res");
-          this.apartment = res.data.result;
-        })
-        .catch((error) => {
-          this.$router.push({ name: "not-found" });
-        })
-        .finally();
-    },
   },
   mounted() {
-    // this.showMap();
-    this.getApartment();
-  },
-  created() {
-    this.$watch(
-      () => this.$route.params,
-      (toParams, previousParams) => {
-        // react to route changes...
-        this.getApartment();
-      }
-    );
+    this.showMap();
   },
 };
 </script>
