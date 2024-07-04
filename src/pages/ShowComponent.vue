@@ -1,10 +1,14 @@
 <template>
-    ShowComponent
+    <SliderComponent />
 </template>
 
 <script>
+import SliderComponent from '../components/SliderComponent.vue';
     export default {
         name: 'ShowComponent',
+        components: {
+            SliderComponent
+        }
     }
 </script>
 
