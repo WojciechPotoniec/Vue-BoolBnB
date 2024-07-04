@@ -14,9 +14,9 @@
       <div>
         <select class="form-select" id="radius" name="" >
             <option value="20" selected>20 km</option>
-            <option value="25">25 km</option>
+            <!-- <option value="25">25 km</option>
             <option value="30">30 km</option>
-            <option value="180">180 km</option>
+            <option value="180">180 km</option> -->
         </select>
       </div>
       <!-- <div>
@@ -55,7 +55,7 @@ export default {
       params: null,
       latitude: "",
       longitude: "",
-      radius: "20",
+      radius: '20',
       result: [],
     };
   },
