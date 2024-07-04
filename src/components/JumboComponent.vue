@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import SearchbarComponent from './SearchbardComponent.vue';
+import SearchbarComponent from './SearchbarComponent.vue';
 
 export default {
     name: 'JumboComponent',
@@ -45,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 #jumbo {
     width: 100%;
-    height: 600px;
+    height: 500px;
     overflow: hidden;
     position: relative;
 }
