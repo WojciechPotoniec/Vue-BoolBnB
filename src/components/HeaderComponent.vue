@@ -6,21 +6,13 @@
           <img :src="logo" alt="Logo">
         </div>
         <div id="header_links" class="d-flex">
-          <button v-if="isMobile" class="hamburger-menu" @click="toggleMenu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-          <ul v-else>
-            <li><a class="nav-link" active-class="active" href="http://localhost:5173">Home</a></li>
-            <!-- <li><a class="nav-link" active-class="active" href="http://localhost:5173">Contacts</a></li>
-            <li><a class="nav-link" active-class="active" href="http://localhost:5173">About Us</a></li> -->
+          <ul>
             <!-- DA RIVEDERE -->
-            <!-- <li v-for="(link, index) in links" :key="index">
+            <li v-for="(link, index) in links" :key="index">
               <router-link :to="{ name: link.routeName }" class="nav-link" active-class="active">
                 {{ link.label }}
               </router-link>
-            </li> -->
+            </li>
           </ul>
         </div>
       </div>
@@ -51,10 +43,9 @@ export default {
       logo: "../public/img/logo.png",
         links: [
           //da sistemare assolutamente!!!
-        // { label: "Home", routeName: "home" },
-        // { label: "Contattaci", routeName: "contact" },
-        // { label: "Chi Siamo", routeName: "about" },
-        // { label: "Show Component", routeName: "apartment/:slug" }
+        { label: "Home", routeName: "home" },
+        { label: "Contattaci", routeName: "contact" },
+        { label: "Chi Siamo", routeName: "about" }
       ],
       isFixed: false, // Stato per tracciare se l'header è fisso
     };
