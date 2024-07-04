@@ -1,15 +1,47 @@
 <template>
+  <div class="mt-5 pt-5">
+     {{ apartment.title }} 
+  </div>
+  <div>
+     {{ apartment.address }} 
+  </div>
+  <div>
+     {{ apartment.bathrooms_num }} 
+  </div>
+  <div>
+     {{ apartment.beds_num }} 
+  </div>
+  <div>
+     {{ apartment.rooms_num }} 
+  </div>
+  <div>
+     {{ apartment.latitude }} 
+  </div>
+  <div>
+     {{ apartment.longitude }} 
+  </div>
+  <div>
+     {{ apartment.visibility }}
+  </div>
+
   <div class="container pt-5 pb-5 mt-5">
-    <div id="slider-title" class="px-5 mb-4 mt-3">
+    <!-- <div id="slider-title" class="px-5 mb-4 mt-3">
       <h2>
-        {{ slides[activeIndexSlide].title }}
-        Title
+        {{ apartment.title }}
       </h2>
-    </div>
+    </div> -->
     <div id="slider">
-      <div class="slider-wrapper " tabindex="0" @keyup.up="prevSlide" @keyup.down="nextSlide">
+      <!-- <div
+        class="slider-wrapper"
+        tabindex="0"
+        @keyup.up="prevSlide"
+        @keyup.down="nextSlide"
+      >
         <div class="item">
-          <img :src="slides[activeIndexSlide].image" :alt="slides[activeIndexSlide].title" />
+          <img
+            src="https://picsum.photos/200/200"
+            :alt="slides[activeIndexSlide].title"
+          />
           <div class="text">
             <h3>{{ slides[activeIndexSlide].title }}</h3>
           </div>
@@ -18,37 +50,35 @@
         <div class="thumbs">
           <div class="prev" @click="prevSlide"></div>
           <div class="next" @click="nextSlide"></div>
-          <div class="thumb" :class="{ active: index === activeIndexSlide }" v-for="(slide, index) in slides"
-            :key="index" @mouseover="goToSlide(index)">
+          <div
+            class="thumb"
+            :class="{ active: index === activeIndexSlide }"
+            v-for="(slide, index) in slides"
+            :key="index"
+            @mouseover="goToSlide(index)"
+          >
             <img :src="slide.image" :alt="slide.title" />
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div id="slider-content" class="d-flex container mt-3">
       <div id="slider-info">
-        <p class="address p-4 fs-4">{{ slides[activeIndexSlide].address }} La via va inserita qua: Intero alloggio:
-          unità in affitto
-          <br>
-        <p class="fs-6">
-          {{ slides[activeIndexSlide].description }} descrizione
-          <br>
-          <i class="fa-solid fa-star"></i>
-          <span>{{ slides[activeIndexSlide].rating }} .ratings</span>
-        </p>
-        </p>
-        <div id="host" class="p-4 border-top border-bottom">
+        <!-- <p class="address p-4 fs-4">{{ apartment.address }}</p> -->
+        <!-- <div id="host" class="p-4 border-top border-bottom">
           <h3>Host</h3>
-          <img class="host-image" :src="slides[activeIndexSlide].hostImage" :alt="slides[activeIndexSlide].hostName" />
+          <img class="host-image" :src="slides.hostImage" :alt="slides[activeIndexSlide].hostName" />
           <p>{{ slides[activeIndexSlide].hostName }} host name
           <p>{{ slides[activeIndexSlide].hostDescription }} host description</p>
           </p>
-        </div>
-        <div id="slider-services" class="border-bottom p-4">
-          <h3>Servizzi</h3>
+        </div> -->
+
+        <!-- //** SERVIZI */ -->
+        <!-- <div id="slider-services" class="border-bottom p-4">
+          <h3>Servizi</h3>
           <ul class="d-flex">
             <li><i class="fa-solid fa-wifi"></i></li>
-            <li class="mx-3">Wifi{{ slides[activeIndexSlide].wifi }}
+            <li class="mx-3">Wifi{{ apartment.services[0].name }}
             </li>
           </ul>
           <ul class="d-flex">
@@ -61,28 +91,26 @@
             <li class="ms-3">Pool{{ slides[activeIndexSlide].pool }}
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <div id="slider-map">
         <h3 class="p-4">Dove sarai</h3>
-        <div id="map" class="p-4">
-        </div>
+        <div id="map" class="p-4"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {store} from "../store";
+import { store } from "../store";
+import axios from "axios";
+import { TOMTOM_API_KEY } from "../../config";
 export default {
   name: "CardComponent",
-  components: {
-  },
   data() {
     return {
-      store: {
-        apiKey: store.apiKey
-      },
+      store,
+      // apartment: null,
       //* array di prova */
       slides: [
         {
@@ -102,7 +130,6 @@ export default {
         },
       ],
       activeIndexSlide: 0,
-      autoPlayId: null,
     };
   },
   methods: {
@@ -127,45 +154,74 @@ export default {
       // Funzione per inizializzare la mappa
       const initMap = () => {
         // Verifica che l'elemento con id "map" esista
-        const mapElement = document.getElementById('map');
+        const mapElement = document.getElementById("map");
         if (mapElement) {
           // Chiave API di TomTom Maps
-          const apiKey = this.store.apiKey;
+          const apiKey = TOMTOM_API_KEY;
 
           try {
             // Crea la mappa all'interno del div con id 'map'
             let map = tt.map({
               key: apiKey,
-              container: 'map',
+              container: "map",
               center: [9.6629, 45.6945], // Centro della mappa (Bergamo)
-              zoom: 15 // Livello di zoom iniziale
+              zoom: 15, // Livello di zoom iniziale
             });
 
             // Aggiunge un marker per la via Borgo Palazzo 132A, Bergamo
-            let marker = new tt.Marker({ color: '#D98B2C' })
+            let marker = new tt.Marker({ color: "#D98B2C" })
               .setLngLat([9.6629, 45.6945]) // Longitudine, latitudine
-              .setPopup(new tt.Popup().setHTML("<h3>Via Borgo Palazzo 132A, Bergamo</h3>"))
+              .setPopup(
+                new tt.Popup().setHTML(
+                  "<h3>Via Borgo Palazzo 132A, Bergamo</h3>"
+                )
+              )
               .addTo(map);
 
             // Aggiunge i controlli di zoom alla mappa
             map.addControl(new tt.NavigationControl());
           } catch (error) {
-            console.error('Errore durante l\'inizializzazione della mappa:', error);
+            console.error(
+              "Errore durante l'inizializzazione della mappa:",
+              error
+            );
           }
         }
       };
-
       // Esegui l'inizializzazione della mappa quando il DOM è pronto
-      if (document.readyState === 'complete') {
+      if (document.readyState === "complete") {
         initMap();
       } else {
-        window.addEventListener('load', initMap);
+        window.addEventListener("load", initMap);
       }
-    }
+    },
+    getApartment() {
+      console.log(this.$route);
+      axios
+        .get(`${this.store.apiBaseUrl}/apartments/${this.$route.params.slug}`)
+        .then((res) => {
+          console.log(res.data.result, "ciao res");
+          this.apartment = res.data.result;
+        })
+        .catch((error) => {
+          this.$router.push({ name: "not-found" });
+        })
+        .finally();
+    },
   },
   mounted() {
-    this.showMap();
-  }
+    // this.showMap();
+    this.getApartment();
+  },
+  created() {
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        // react to route changes...
+        this.getApartment();
+      }
+    );
+  },
 };
 </script>
 
@@ -267,7 +323,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   #map {
     width: 90%;
     height: 400px;

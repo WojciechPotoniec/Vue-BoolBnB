@@ -1,20 +1,34 @@
 <template>
-  <div class="container stack">
-    <div class="card">
-      <div class="image">
-        <img src="https://picsum.photos/seed/picsum/200/200" class="card-img-top" alt="picsum alt" />
-        <div class="text">appartment title</div>
-      </div>
-      <div class="card-body">
-        <p>description</p>
+  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
+    <i class="fas fa-eye"></i>
+    <div class="container stack">
+      <div class="card">
+        <div class="image">
+          <img
+            src="https://picsum.photos/200/200"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="text">{{ card.title }}</div>
+          <div class="card-body">
+            <p>description</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script>
+import { store } from "../store";
 export default {
   name: "CardComponent",
+  props: ["card"],
+  data() {
+    return {
+      store,
+    };
+  },
 };
 </script>
 
@@ -24,6 +38,7 @@ export default {
 img {
   display: block;
   max-width: 100%;
+  object-fit: cover;
 }
 
 .stack {
@@ -47,7 +62,7 @@ img {
   aspect-ratio: 3 / 2;
   border: 2px solid $secondary-gold;
   border-radius: 10px;
-  background-color: rgba($primary-bg, 0.80);
+  background-color: rgba($primary-bg, 0.8);
   position: relative;
   transition: 0.15s ease;
   cursor: pointer;

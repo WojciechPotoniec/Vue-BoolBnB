@@ -2,7 +2,7 @@
     <main>
         <div class="container">
             <div class="row">
-        <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, i) in store.apartments" :key="i">
+        <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, i) in apartments" :key="i">
             <CardComponent :card="apartment" />
         </div>
         </div>
@@ -21,8 +21,21 @@ import CardComponent from './CardComponent.vue';
         },
         data(){
             return {
-                store
+                store,
+                apartments: []
             }
+        },
+        methods: {
+            getAllApartments() {
+            axios.get(this.store.apiBaseUrl + '/apartments').then((res) => {
+                console.log(res.data);
+                this.apartments = res.data.results;
+                // console.log(this.apartments, 'test main');
+                //se paginazione
+                //this.projects = res.data.results.data;
+                //this.currentPage = res.data.results.current_page;
+            });
+        },
         },
         //**! METODO PER PRENDERE TUTTI GLI APARTMENT CON L'IMMAGINE IN FORMATO ARRAY SPLITTATO */
         // methods: {
@@ -38,7 +51,7 @@ import CardComponent from './CardComponent.vue';
         //     }
         // },
         mounted(){
-            // this.getAllApartments();
+            this.getAllApartments();
         }
     }
 </script>

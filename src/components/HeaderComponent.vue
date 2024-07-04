@@ -12,11 +12,15 @@
             <span class="bar"></span>
           </button>
           <ul v-else>
-            <li v-for="(link, index) in links" :key="index">
+            <li><a class="nav-link" active-class="active" href="http://localhost:5173">Home</a></li>
+            <!-- <li><a class="nav-link" active-class="active" href="http://localhost:5173">Contacts</a></li>
+            <li><a class="nav-link" active-class="active" href="http://localhost:5173">About Us</a></li> -->
+            <!-- DA RIVEDERE -->
+            <!-- <li v-for="(link, index) in links" :key="index">
               <router-link :to="{ name: link.routeName }" class="nav-link" active-class="active">
                 {{ link.label }}
               </router-link>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -45,11 +49,12 @@ export default {
   data() {
     return {
       logo: "../public/img/logo.png",
-      links: [
-        { label: "Home", routeName: "home" },
-        { label: "Contattaci", routeName: "contact" },
-        { label: "Chi Siamo", routeName: "about" },
-        { label: "Show Component", routeName: "show" }
+        links: [
+          //da sistemare assolutamente!!!
+        // { label: "Home", routeName: "home" },
+        // { label: "Contattaci", routeName: "contact" },
+        // { label: "Chi Siamo", routeName: "about" },
+        // { label: "Show Component", routeName: "apartment/:slug" }
       ],
       isFixed: false, // Stato per tracciare se l'header è fisso
     };
