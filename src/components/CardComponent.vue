@@ -1,6 +1,6 @@
 <template>
   <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
-    <i class="fas fa-eye"></i>
+    <!-- <i class="fas fa-eye"></i> -->
     <div class="container stack">
       <div class="card">
         <div class="image">
