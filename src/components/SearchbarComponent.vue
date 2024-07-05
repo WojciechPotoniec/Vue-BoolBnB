@@ -4,7 +4,7 @@
       <div id="searchbar_input" class="px-3">
         <label for="destination">where</label>
         <input id="address" list="locality" type="text" aria-label="Destination" class="form-control"
-          placeholder="Search Destination" v-model="searchQuery.destination" @keyup.enter="search"  @input ="suggestion"/>
+          placeholder="Search Destination" v-model="this.store.destination" @keyup.enter="search"  @input ="suggestion"/>
         <datalist id="locality">
         </datalist>
       </div>
@@ -46,9 +46,9 @@ export default {
     return {
       store,
       router,
-      searchQuery: {
+      /* searchQuery: {
         destination: "",
-      },
+      }, */
       params: null,
       latitude: "",
       longitude: "",
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     async suggestion() {
-      const url2 = `https://api.tomtom.com/search/2/search/${encodeURIComponent(this.searchQuery.destination)}.json?key=${TOMTOM_API_KEY}&countrySet=it-IT&limit=10`;
+      const url2 = `https://api.tomtom.com/search/2/search/${encodeURIComponent(this.store.destination)}.json?key=${TOMTOM_API_KEY}&countrySet=it-IT&limit=10`;
       try {
         const response = await fetch(url2);
         const data = await response.json();
@@ -83,11 +83,11 @@ export default {
       }
     },
     async search() {
-      if (!this.searchQuery.destination) {
+      if (!this.store.destination) {
         alert("Per favore inserisci una destinazione.");
         return;
       }
-      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${TOMTOM_API_KEY}`;
+      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.store.destination)}.json?key=${TOMTOM_API_KEY}`;
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -95,6 +95,7 @@ export default {
         this.longitude = data.results[0].position.lon;
         this.result = data.results;
         this.setParams();
+        this.$router.push({ path: "/results" });
       } catch (error) {
         console.error("Errore durante la ricerca:", error);
       }
