@@ -2,12 +2,12 @@
   <div id="searchbar" class="mt-3">
     <div class="d-flex container justify-content-between pt-2">
       <div id="searchbar_input" class="px-3">
-        <label for="destination">Dove</label>
+        <label for="destination">where</label>
         <input
           type="text"
           aria-label="Destination"
           class="form-control"
-          placeholder="Cerca Destinazione"
+          placeholder="Search Destination"
           v-model="searchQuery.destination" @keyup.enter="search"
         />
       </div>

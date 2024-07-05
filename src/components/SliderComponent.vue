@@ -55,7 +55,7 @@
         </ul>
         <!-- //** SERVIZI */ -->
         <div id="slider-services" class="border-bottom p-4">
-          <h3>Servizi</h3>
+          <h3>Servicies</h3>
           <div v-for="(item, index) in item.services" :key="index">
             <ul class="d-flex">
               <li><i :class="item.icon"></i></li>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div id="slider-map">
-        <h3 class="p-4">Dove sarai</h3>
+        <h3 class="p-4"> Where will you be</h3>
         <div id="map" class="p-4"></div>
       </div>
     </div>

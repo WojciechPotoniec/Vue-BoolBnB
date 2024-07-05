@@ -25,7 +25,7 @@
           </li>
           <li>
             <a href="http://localhost:8000/register" class="nav-link">
-              <span>Registrati</span>
+              <span>sign in</span>
             </a>
           </li>
         </ul>
@@ -44,8 +44,8 @@ export default {
         links: [
           //da sistemare assolutamente!!!
         { label: "Home", routeName: "home" },
-        { label: "Contattaci", routeName: "contact" },
-        { label: "Chi Siamo", routeName: "about" }
+        { label: "contact", routeName: "contact" },
+        { label: "about us", routeName: "about" }
       ],
       isFixed: false, // Stato per tracciare se l'header è fisso
     };
