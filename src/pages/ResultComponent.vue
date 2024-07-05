@@ -86,6 +86,9 @@ export default {
       } if (this.reception){
         this.params.reception= true;
       }
+      this.params.lat = this.store.latitude,
+      this.params.lon = this.store.longitude,
+      this.params.radius = this.store.radius
       
     },
     console() {
@@ -97,6 +100,7 @@ export default {
       console.log(this.params.key);
       console.log(this.store.destination);
       console.log(this.store.radius);
+      console.log(this.store.apartmentsFiltered)
       this.getApartmentsUltraFiltered();
     },
     getApartmentsUltraFiltered() {

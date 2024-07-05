@@ -8,5 +8,7 @@ export const store = reactive({
     apartmentsFiltered: [],
     apartmentsUltraFiltered: [],
     destination: '',
-    radius: ''
+    radius: '',
+    latitude: '',
+    longitude: ''
 });

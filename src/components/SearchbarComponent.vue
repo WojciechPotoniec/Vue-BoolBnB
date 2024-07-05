@@ -47,8 +47,8 @@ export default {
       store,
       router,
       params: null,
-      latitude: "",
-      longitude: "",
+      /* latitude: "",
+      longitude: "", */
       /* radius: 20, */
       result: [],
     };
@@ -88,8 +88,8 @@ export default {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        this.latitude = data.results[0].position.lat;
-        this.longitude = data.results[0].position.lon;
+        this.store.latitude = data.results[0].position.lat;
+        this.store.longitude = data.results[0].position.lon;
         this.result = data.results;
         this.setParams();
         this.$router.push({ path: "/results" });
@@ -98,10 +98,10 @@ export default {
       }
     },
     setParams() {
-      if (this.latitude && this.longitude) {
+      if (this.store.latitude && this.store.longitude) {
         this.params = {
-          lat: this.latitude,
-          lon: this.longitude,
+          lat: this.store.latitude,
+          lon: this.store.longitude,
           radius: this.store.radius,
         };
         this.getApartmentsFiltered();
