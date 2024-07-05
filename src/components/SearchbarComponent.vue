@@ -3,20 +3,17 @@
     <div class="d-flex container justify-content-between pt-2">
       <div id="searchbar_input" class="px-3">
         <label for="destination">where</label>
-        <input
-          type="text"
-          aria-label="Destination"
-          class="form-control"
-          placeholder="Search Destination"
-          v-model="searchQuery.destination" @keyup.enter="search"
-        />
+        <input id="address" list="locality" type="text" aria-label="Destination" class="form-control"
+          placeholder="Search Destination" v-model="searchQuery.destination" @keyup.enter="search"  @input ="suggestion"/>
+        <datalist id="locality">
+        </datalist>
       </div>
       <div>
-        <select class="form-select" id="radius" name="" >
-            <option value="20" selected>20 km</option>
-            <!-- <option value="25">25 km</option>
-            <option value="30">30 km</option>
-            <option value="180">180 km</option> -->
+        <select class="form-select" id="radius" v-model="radius">
+          <option value="20" selected>20 km</option>
+          <option value="25">25 km</option>
+          <option value="30">30 km</option>
+          <option value="180">180 km</option>
         </select>
       </div>
       <!-- <div>
@@ -46,80 +43,90 @@ export default {
   name: "SearchbarComponent",
   data() {
     return {
-     
       store,
-      router: router,
+      router,
       searchQuery: {
         destination: "",
       },
       params: null,
       latitude: "",
       longitude: "",
-      radius: '20',
+      radius: 20,
       result: [],
     };
   },
   methods: {
+    async suggestion() {
+      const url2 = `https://api.tomtom.com/search/2/search/${encodeURIComponent(this.searchQuery.destination)}.json?key=${TOMTOM_API_KEY}&countrySet=it-IT&limit=10`;
+      try {
+        const response = await fetch(url2);
+        const data = await response.json();
+        const myArray = data.results.map(result => result.address);
+        const datalist = document.getElementById('locality');
+        datalist.innerHTML = '';
+        myArray.forEach(result => {
+          let suggest = document.createElement('option');
+          if (result.streetName && result.municipality && result.postalCode) {
+            suggest.value = `${result.streetName}, ${result.municipality}, ${result.postalCode}`;
+          } else if (result.streetName) {
+            suggest.value = result.streetName;
+          } else if (result.municipality) {
+            suggest.value = result.municipality;
+          } else if (result.postalCode) {
+            suggest.value = result.postalCode;
+          }
+          datalist.append(suggest);
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    },
     async search() {
       if (!this.searchQuery.destination) {
         alert("Per favore inserisci una destinazione.");
         return;
       }
-      // Replace with your API endpoint URL
-      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
-        this.searchQuery.destination
-      )}.json?key=${TOMTOM_API_KEY}`;
-      // console.log(url);
+      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.searchQuery.destination)}.json?key=${TOMTOM_API_KEY}`;
       try {
         const response = await fetch(url);
         const data = await response.json();
         this.latitude = data.results[0].position.lat;
         this.longitude = data.results[0].position.lon;
         this.result = data.results;
-        // console.log(this.result[0].address);
-        // Redirect to results page with search results data
-        this.$router.push({ path: "/results" });
+        this.setParams();
       } catch (error) {
         console.error("Errore durante la ricerca:", error);
       }
-      const myurl = `${store.apiBaseUrl}/apartments?lat=${this.latitude}&lon=${this.longitude}&radius=${this.radius}`;
-
-      /*  try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.store.apartments = data.results;
-        console.log(this.store.apartments)
-
-      } catch (error) {
-        console.error('Errore durante la ricerca:', error);
-      } */
-      console.log(myurl);
-      this.setParams();
     },
     setParams() {
-      if (this.radius && this.latitude && this.longitude) {
+      if (this.latitude && this.longitude) {
         this.params = {
           lat: this.latitude,
           lon: this.longitude,
           radius: this.radius,
         };
+        this.getApartmentsFiltered();
       }
-      this.getAllApartments();
     },
-    getAllApartments() {
+    getApartmentsFiltered() {
       axios
         .get(store.apiBaseUrl + "/apartments", { params: this.params })
         .then((res) => {
-          this.store.apartments = res.data.results;
+          this.store.apartmentsFiltered = res.data.results;
           this.params = null;
-          console.log(this.store.apartments);
+          console.log(this.store.apartmentsFiltered);
+        })
+        .catch(error => {
+          console.error('Error fetching apartments:', error);
         });
     },
   },
-  mounted() {
-    this.getAllApartments();
-  },
+  mounted() {},
 };
+
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -144,5 +151,4 @@ input {
   border: none;
   outline: none;
 }
-
 </style>

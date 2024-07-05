@@ -4,7 +4,7 @@
     <div class="row">
       <div
         class="col-12 col-xl-4 col-lg-6"
-        v-for="(apartment, i) in store.apartments"
+        v-for="(apartment, i) in this.store.apartmentsFiltered"
         :key="i"
       >
         <CardComponent :card="apartment" />
