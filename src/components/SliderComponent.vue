@@ -54,7 +54,7 @@
           <li><b>Square meters:</b> {{ item.square_meters }}</li>
         </ul>
         <!-- //** SERVIZI */ -->
-        <div id="slider-services" class="border-bottom p-4">
+        <div id="slider-services" class=" border-top border-bottom p-4">
           <h3>Services</h3>
           <div v-for="(item, index) in item.services" :key="index">
             <ul class="d-flex">
