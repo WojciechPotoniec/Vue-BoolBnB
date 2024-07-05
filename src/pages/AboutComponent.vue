@@ -1,5 +1,7 @@
 <template>
-    AboutComponent
+    <div id="about">
+        AboutComponent
+    </div>
 </template>
 
 <script>
@@ -10,5 +12,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+#about {
+    margin-top: 100px;
+}
 </style>

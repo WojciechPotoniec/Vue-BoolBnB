@@ -44,8 +44,8 @@ export default {
         links: [
           //da sistemare assolutamente!!!
         { label: "Home", routeName: "home" },
-        { label: "contact", routeName: "contact" },
-        { label: "about us", routeName: "about" }
+        { label: "Contact", routeName: "contact" },
+        { label: "About Us", routeName: "about" }
       ],
       isFixed: false, // Stato per tracciare se l'header è fisso
     };
