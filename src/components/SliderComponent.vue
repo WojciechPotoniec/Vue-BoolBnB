@@ -51,11 +51,11 @@
           <li><b>Number of rooms:</b> {{ item.rooms_num }}</li>
           <li><b>Number of beds:</b> {{ item.beds_num }}</li>
           <li><b>Number of bathrooms:</b> {{ item.bathrooms_num }}</li>
-          <li><b>Squale meters:</b> {{ item.square_meters }}</li>
+          <li><b>Square meters:</b> {{ item.square_meters }}</li>
         </ul>
         <!-- //** SERVIZI */ -->
         <div id="slider-services" class="border-bottom p-4">
-          <h3>Servicies</h3>
+          <h3>Services</h3>
           <div v-for="(item, index) in item.services" :key="index">
             <ul class="d-flex">
               <li><i :class="item.icon"></i></li>
