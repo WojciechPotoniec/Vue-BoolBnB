@@ -114,7 +114,10 @@ export default {
       axios
         .get(store.apiBaseUrl + "/apartments", { params: this.params })
         .then((res) => {
-          this.store.apartmentsFiltered = res.data.results;
+          this.store.apartmentsFiltered = res.data.results.map(apartment => {
+            apartment.image = JSON.parse(apartment.image);
+                    return apartment;
+          });
           this.params = null;
           console.log(this.store.apartmentsFiltered);
         })

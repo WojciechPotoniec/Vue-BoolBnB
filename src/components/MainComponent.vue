@@ -31,16 +31,6 @@ export default {
     methods: {
 
 
-        // getOneImg(apartment) {
-        //     if (apartment.image && apartment.image.length > 0) {
-        //     for (let i = 0; i < apartment.image.length; i++) {
-        //         if (apartment.image[i]) {
-        //             return this.store.imgBasePath + apartment.image[i]
-        //         }
-        //     }
-        // }
-        
-        // },
         getOneImg(apartment) {
   if (apartment.image) {
     // Itera sugli elementi dell'array associativo
