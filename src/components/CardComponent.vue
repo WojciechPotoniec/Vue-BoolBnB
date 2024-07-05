@@ -1,14 +1,9 @@
 <template>
   <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
-    <!-- <i class="fas fa-eye"></i> -->
     <div class="container stack">
       <div class="card">
         <div class="image">
-          <img
-            src="https://picsum.photos/200/200"
-            class="card-img-top"
-            alt=""
-          />
+          <img :src="getOneImg(card)" class="card-img-top" alt="" /> 
           <div class="text">{{ card.title }}</div>
           <div class="card-body">
             <p>description</p>
@@ -16,19 +11,26 @@
         </div>
       </div>
     </div>
+    
   </RouterLink>
+
+ 
 </template>
 
 <script>
 import { store } from "../store";
 export default {
   name: "CardComponent",
-  props: ["card"],
-  data() {
-    return {
-      store,
-    };
-  },
+  props: {
+    card: {
+      type: Object,
+      required: true
+    },
+    getOneImg: {
+      type: Function,
+      required: true
+    }
+  }
 };
 </script>
 
@@ -46,11 +48,14 @@ img {
   max-width: 300px;
   padding: 30px;
   transition: 0.25s ease;
+
   &:hover {
     transform: rotate(5deg);
+
     .card:before {
       transform: translatey(-2%) rotate(-4deg);
     }
+
     .card:after {
       transform: translatey(2%) rotate(4deg);
     }
@@ -67,6 +72,7 @@ img {
   transition: 0.15s ease;
   cursor: pointer;
   padding: 10% 10% 10%;
+
   &:before,
   &:after {
     content: "";
@@ -96,6 +102,7 @@ img {
     transform: translatey(2%) rotate(6deg);
   }
 }
+
 .image {
   width: 100%;
   // border: 2px solid $secondary-gold;
@@ -105,6 +112,7 @@ img {
   position: relative;
   overflow: hidden;
 }
+
 .text {
   color: $white;
   position: absolute;
