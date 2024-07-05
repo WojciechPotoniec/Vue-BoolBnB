@@ -5,5 +5,8 @@ export const store = reactive({
     imgBasePath: 'http://127.0.0.1:8000/storage/',
     defaultImg: '' ,// da definire un'immagine di default,
     apartments: [],
-    apartmentsFiltered: []
+    apartmentsFiltered: [],
+    apartmentsUltraFiltered: [],
+    destination: '',
+    radius: ''
 });

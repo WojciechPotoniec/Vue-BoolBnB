@@ -6,7 +6,7 @@
           <img :src="getOneImg(card)" class="card-img-top" alt="" /> 
           <div class="text">{{ card.title }}</div>
           <div class="card-body">
-            <p>description</p>
+           
           </div>
         </div>
       </div>
