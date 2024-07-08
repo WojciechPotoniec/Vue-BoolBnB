@@ -1,9 +1,9 @@
 <template>
   <div class="mt-5 pt-5 container" id="results">
-    <h1 class="mt-2">Results</h1>
+    <h1 class="mt-3">Results</h1>
     
     <!-- Filtri per i servizi -->
-    <div>
+    <div class="checkbox-group">
       <div v-for="service in store.services" :key="service.id">
         <input type="checkbox" :value="service.id" v-model="selectedServices">
         <label>{{ service.name }}</label>
@@ -43,6 +43,7 @@
     </div>
   </div>
 </template>
+
 
 
 
@@ -131,4 +132,112 @@ export default {
 </script>
 
 
+<style lang="scss" scoped>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+#results {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-out;
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-out 0.2s backwards;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  animation: fadeIn 1s ease-out 0.4s backwards;
+}
+
+.checkbox-group div {
+  flex: 1 1 calc(33.333% - 10px);
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  animation: fadeIn 1s ease-out 0.6s backwards;
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #007bff;
+}
+
+input[type="number"], .form-select {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+button.btn {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  animation: fadeIn 1s ease-out 0.8s backwards;
+}
+
+button.btn:hover {
+  background-color: #0056b3;
+}
+
+#results h2 {
+  font-size: 24px;
+  margin-top: 20px;
+  color: #333;
+  animation: fadeIn 1s ease-out 1s backwards;
+}
+
+#results p {
+  color: #666;
+  animation: fadeIn 1s ease-out 1.2s backwards;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-out 1.4s backwards;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-body {
+  padding: 15px;
+}
+</style>
