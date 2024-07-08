@@ -1,41 +1,43 @@
 <template>
   <div class="mt-5 pt-5 container" id="results">
     <h1 class="mt-3">Results</h1>
-    
+
     <!-- Filtri per i servizi -->
     <div class="checkbox-group">
       <div v-for="service in store.services" :key="service.id">
         <input type="checkbox" :value="service.id" v-model="selectedServices">
-        <label>{{ service.name }}</label>
+        <label class="service-name">{{ service.name }}</label>
       </div>
     </div>
-    
-    <!-- Filtri per il numero minimo di letti e stanze -->
-    <div class="form-group mt-3">
-      <label for="minBeds">Min number of beds</label>
-      <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" />
+    <!-- Container per i filtri -->
+    <div class="filters d-flex flex-wrap mt-4">
+      <!-- Filtri per il numero minimo di letti e stanze -->
+      <div class="form-group">
+        <label for="minBeds">Min number of beds</label>
+        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" />
+      </div>
+      <div class="form-group">
+        <label for="minRooms">Min number of rooms</label>
+        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" />
+      </div>
+
+      <!-- Menu a tendina per il raggio di ricerca -->
+      <div class="form-group">
+        <label for="radius">Radius (km)</label>
+        <select class="form-select" v-model="store.radius">
+          <option value="25">25 km</option>
+          <option value="30">30 km</option>
+          <option value="180">180 km</option>
+        </select>
+      </div>
     </div>
-    <div class="form-group mt-3">
-      <label for="minRooms">Min number of rooms</label>
-      <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" />
-    </div>
-    
-    <!-- Menu a tendina per il raggio di ricerca -->
-    <div class="form-group mt-3">
-      <label for="radius">Radius (km)</label>
-      <select class="form-select" v-model="store.radius">
-        <option value="25">25 km</option>
-        <option value="30">30 km</option>
-        <option value="180">180 km</option>
-      </select>
-    </div>
-    
+
     <!-- Bottone per applicare tutti i filtri -->
     <button @click="applyFilters" class="btn btn-primary mt-2">Apply Filters</button>
-    
+
     <!-- Risultati della ricerca -->
     <div class="row mt-3">
-      <h2>Results for {{ store.destination }}</h2>
+      <h2>Results for {{ capitalizedDestination }}</h2>
       <p>The number of apartments for your search are: {{ store.apartmentsUltraFiltered.length }}</p>
       <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsUltraFiltered" :key="index">
         <CardComponent :card="apartment" :getOneImg="getOneImg" />
@@ -48,6 +50,7 @@
 
 
 
+
 <script>
 import axios from "axios";
 import { store } from "../store.js";
@@ -55,8 +58,8 @@ import CardComponent from "@/components/CardComponent.vue";
 
 export default {
   name: "ResultComponent",
-  
-  components: { 
+
+  components: {
     CardComponent,
   },
   data() {
@@ -76,11 +79,19 @@ export default {
       axios.get(this.store.apiBaseUrl + '/services')
         .then((res) => {
           console.log('Services response:', res.data);
-          this.store.services = res.data.results;
+          this.store.services = res.data.results.map(service => ({
+            ...service,
+            name: this.capitalizeFirstLetter(service.name)
+          }));
         })
         .catch((error) => {
           console.error('Error fetching services:', error);
         });
+    },
+
+    capitalizeFirstLetter(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
     },
 
     getOneImg(apartment) {
@@ -128,6 +139,12 @@ export default {
         });
     },
   },
+  computed: {
+    capitalizedDestination() {
+      if (!this.store.destination) return '';
+      return this.store.destination.charAt(0).toUpperCase() + this.store.destination.slice(1);
+    },
+  }
 }
 </script>
 
@@ -138,6 +155,7 @@ export default {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -186,7 +204,8 @@ input[type="checkbox"] {
   accent-color: #007bff;
 }
 
-input[type="number"], .form-select {
+input[type="number"],
+.form-select {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
