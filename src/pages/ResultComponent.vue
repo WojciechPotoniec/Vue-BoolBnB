@@ -2,40 +2,28 @@
   <div class="mt-5 pt-5 container" id="results">
     <h1 class="mt-3">Results</h1>
 
-    <!-- Filtri per i servizi -->
     <div class="checkbox-group">
       <div v-for="service in store.services" :key="service.id">
-        <input type="checkbox" :value="service.id" v-model="selectedServices">
-        <label class="service-name">{{ service.name }}</label>
+        <input type="checkbox" :value="service.id" v-model="selectedServices" @change="applyFilters">  <label class="service-name">{{ service.name }}</label>
       </div>
     </div>
-    <!-- Container per i filtri -->
-    <div class="filters d-flex flex-wrap mt-4">
-      <!-- Filtri per il numero minimo di letti e stanze -->
+    <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
       <div class="form-group">
         <label for="minBeds">Min number of beds</label>
-        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" />
-      </div>
-      <div class="form-group">
+        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" @change="applyFilters">  </div>
+      <div class="form-group ms-4">
         <label for="minRooms">Min number of rooms</label>
-        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" />
-      </div>
+        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" @change="applyFilters">  </div>
 
-      <!-- Menu a tendina per il raggio di ricerca -->
-      <div class="form-group">
+      <div class="form-group ms-4">
         <label for="radius">Radius (km)</label>
-        <select class="form-select" v-model="store.radius">
-          <option value="25">25 km</option>
+        <select class="form-select" v-model="store.radius" @change="applyFilters">  <option value="25">25 km</option>
           <option value="30">30 km</option>
           <option value="180">180 km</option>
         </select>
       </div>
     </div>
 
-    <!-- Bottone per applicare tutti i filtri -->
-    <button @click="applyFilters" class="btn btn-primary mt-2">Apply Filters</button>
-
-    <!-- Risultati della ricerca -->
     <div class="row mt-3">
       <h2>Results for {{ capitalizedDestination }}</h2>
       <p>The number of apartments for your search are: {{ store.apartmentsUltraFiltered.length }}</p>
@@ -45,11 +33,6 @@
     </div>
   </div>
 </template>
-
-
-
-
-
 
 <script>
 import axios from "axios";
@@ -258,5 +241,11 @@ button.btn:hover {
 
 .card-body {
   padding: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .filters{
+    margin: 0;
+  }
 }
 </style>
