@@ -7,6 +7,7 @@ export const store = reactive({
     apartments: [],
     apartmentsFiltered: [],
     apartmentsUltraFiltered: [],
+    services: [],
     destination: '',
     radius: '',
     latitude: '',

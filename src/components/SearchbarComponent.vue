@@ -47,9 +47,9 @@ export default {
       store,
       router,
       params: null,
-      /* latitude: "",
-      longitude: "", */
-      /* radius: 20, */
+       latitude: "",
+      longitude: "", 
+      radius: 20, 
       result: [],
     };
   },
@@ -123,7 +123,9 @@ export default {
         });
     },
   },
-  mounted() {},
+  mounted() {
+    this.store.radius = 20;
+  },
 };
 
 
