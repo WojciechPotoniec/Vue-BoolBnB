@@ -136,16 +136,16 @@ export default {
             let map = tt.map({
               key: apiKey,
               container: "map",
-              center: [9.6629, 45.6945], // Centro della mappa (Bergamo)
+              center: [this.item.longitude, this.item.latitude], // Centro della mappa (Bergamo)
               zoom: 15, // Livello di zoom iniziale
             });
 
             // Aggiunge un marker per la via Borgo Palazzo 132A, Bergamo
             let marker = new tt.Marker({ color: "#D98B2C" })
-              .setLngLat([9.6629, 45.6945]) // Longitudine, latitudine
+              .setLngLat([this.item.longitude, this.item.latitude]) // Longitudine, latitudine
               .setPopup(
                 new tt.Popup().setHTML(
-                  "<h3>Via Borgo Palazzo 132A, Bergamo</h3>"
+                  `<h3>${this.item.address}</h3>`
                 )
               )
               .addTo(map);
