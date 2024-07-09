@@ -10,10 +10,11 @@
     <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
       <div class="form-group">
         <label for="minBeds">Min number of beds</label>
-        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" @change="applyFilters">  </div>
+        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" @change="applyFilters" min="0" max="15">
+      </div>
       <div class="form-group ms-4">
         <label for="minRooms">Min number of rooms</label>
-        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" @change="applyFilters">  </div>
+        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" @change="applyFilters" min="0" max="15">  </div>
 
       <div class="form-group ms-4">
         <label for="radius">Radius (km)</label>
