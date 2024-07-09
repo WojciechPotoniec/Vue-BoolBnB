@@ -2,26 +2,31 @@
   <div class="mt-5 pt-5 container" id="results">
     <h1 class="mt-3">Results</h1>
 
-    <div class="checkbox-group">
-      <div v-for="service in store.services" :key="service.id">
-        <input type="checkbox" :value="service.id" v-model="selectedServices" @change="applyFilters">  <label class="service-name">{{ service.name }}</label>
-      </div>
-    </div>
     <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
-      <div class="form-group">
-        <label for="minBeds">Min number of beds</label>
-        <input type="number" class="form-control" placeholder="Min number of beds" v-model.number="minBeds" @change="applyFilters" min="0" max="15">
-      </div>
-      <div class="form-group ms-4">
-        <label for="minRooms">Min number of rooms</label>
-        <input type="number" class="form-control" placeholder="Min number of rooms" v-model.number="minRooms" @change="applyFilters" min="0" max="15">  </div>
-
-      <div class="form-group ms-4">
-        <label for="radius">Radius (km)</label>
-        <select class="form-select" v-model="store.radius" @change="applyFilters">  <option value="25">25 km</option>
-          <option value="30">30 km</option>
-          <option value="180">180 km</option>
-        </select>
+      <div class="button-group d-flex flex-wrap mb-3">
+        <button v-for="service in store.services" :key="service.id"
+          :class="['service-button', 'styled-input', { 'selected': selectedServices.includes(service.id) }]"
+          @click="toggleService(service.id)">
+          {{ service.name }}
+        </button>
+        <div class="filters d-flex flex-wrap">
+          <div class="form-group ">
+            <input type="number" class="form-control styled-input" placeholder="beds" v-model.number="minBeds"
+              @change="applyFilters" min="0" max="15">
+          </div>
+          <div class="form-group ms-4">
+            <input type="number" class="form-control styled-input" placeholder="rooms" v-model.number="minRooms"
+              @change="applyFilters" min="0" max="15">
+          </div>
+          <div class="form-group ms-4">
+            <select class="form-select styled-input" v-model="store.radius" @change="applyFilters">
+              <option value="" disabled selected>Radius</option>
+              <option value="25">25 km</option>
+              <option value="30">30 km</option>
+              <option value="180">180 km</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -42,7 +47,6 @@ import CardComponent from "@/components/CardComponent.vue";
 
 export default {
   name: "ResultComponent",
-
   components: {
     CardComponent,
   },
@@ -56,13 +60,12 @@ export default {
   },
   created() {
     this.getServices();
-    this.getApartmentsUltraFiltered(); // Carica inizialmente tutti gli appartamenti
+    this.getApartmentsUltraFiltered();
   },
   methods: {
     getServices() {
       axios.get(this.store.apiBaseUrl + '/services')
         .then((res) => {
-          console.log('Services response:', res.data);
           this.store.services = res.data.results.map(service => ({
             ...service,
             name: this.capitalizeFirstLetter(service.name)
@@ -74,8 +77,7 @@ export default {
     },
 
     capitalizeFirstLetter(str) {
-      if (!str) return '';
-      return str.charAt(0).toUpperCase() + str.slice(1);
+      return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
     },
 
     getOneImg(apartment) {
@@ -86,11 +88,10 @@ export default {
           }
         }
       }
-      return ''; // o this.store.imgBasePath + 'default.jpg' per un'immagine di default
+      return '';
     },
 
     applyFilters() {
-      // Assicurati che il raggio sia un numero float
       this.store.radius = parseFloat(this.store.radius);
       this.getApartmentsUltraFiltered();
     },
@@ -105,12 +106,9 @@ export default {
         minRooms: this.minRooms,
       };
 
-      console.log('Fetching apartments with params:', params);
-
       axios
         .get(`${this.store.apiBaseUrl}/apartments`, { params })
         .then((res) => {
-          console.log('Apartments response:', res.data);
           this.store.apartmentsUltraFiltered = res.data.results.map((apartment) => {
             if (apartment.image) {
               apartment.image = JSON.parse(apartment.image);
@@ -122,18 +120,28 @@ export default {
           console.error('Error fetching apartments:', error);
         });
     },
+
+    toggleService(serviceId) {
+      const index = this.selectedServices.indexOf(serviceId);
+      if (index > -1) {
+        this.selectedServices.splice(index, 1);
+      } else {
+        this.selectedServices.push(serviceId);
+      }
+      this.applyFilters();
+    },
   },
   computed: {
     capitalizedDestination() {
-      if (!this.store.destination) return '';
-      return this.store.destination.charAt(0).toUpperCase() + this.store.destination.slice(1);
+      return this.store.destination ? this.store.destination.charAt(0).toUpperCase() + this.store.destination.slice(1) : '';
     },
   }
 }
 </script>
 
-
 <style lang="scss" scoped>
+@import "../assets/styles/partials/variables.scss";
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -161,16 +169,30 @@ h1 {
   animation: fadeIn 1s ease-out 0.2s backwards;
 }
 
-.checkbox-group {
+.button-group {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   animation: fadeIn 1s ease-out 0.4s backwards;
 }
 
-.checkbox-group div {
-  flex: 1 1 calc(33.333% - 10px);
+.service-button {
   margin-bottom: 10px;
+  background-color: $primary-bg;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.service-button.selected {
+  background-color: #0056b3;
+}
+
+.service-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .form-group {
@@ -178,23 +200,22 @@ h1 {
   animation: fadeIn 1s ease-out 0.6s backwards;
 }
 
-label {
-  font-weight: bold;
-  color: #555;
-}
-
-input[type="checkbox"] {
-  margin-right: 10px;
-  accent-color: #007bff;
-}
-
-input[type="number"],
-.form-select {
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.styled-input {
+  height: 60px;
+  width: 85px;
   padding: 10px;
   font-size: 16px;
-  width: 100%;
+  background-color: $primary-bg;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.styled-input:hover,
+.styled-input:focus {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 button.btn {
@@ -244,9 +265,17 @@ button.btn:hover {
   padding: 15px;
 }
 
-@media screen and (min-width: 768px) {
-  .filters{
-    margin: 0;
+input::placeholder {
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .service-button {
+    flex: 1 1 100%;
   }
 }
 </style>
