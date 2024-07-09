@@ -62,18 +62,30 @@ export default {
         const myArray = data.results.map(result => result.address);
         const datalist = document.getElementById('locality');
         datalist.innerHTML = '';
+
+        // Utilizza un Set per tenere traccia degli indirizzi aggiunti
+        const addedAddresses = new Set();
+        
         myArray.forEach(result => {
           let suggest = document.createElement('option');
+          let addressString = '';
+
           if (result.streetName && result.municipality && result.postalCode) {
-            suggest.value = `${result.streetName}, ${result.municipality}, ${result.postalCode}`;
+            addressString = `${result.streetName}, ${result.municipality}, ${result.postalCode}`;
           } else if (result.streetName) {
-            suggest.value = result.streetName;
+            addressString = result.streetName;
           } else if (result.municipality) {
-            suggest.value = result.municipality;
+            addressString = result.municipality;
           } else if (result.postalCode) {
-            suggest.value = result.postalCode;
+            addressString = result.postalCode;
           }
-          datalist.append(suggest);
+
+          // Aggiungi solo indirizzi unici
+          if (addressString && !addedAddresses.has(addressString)) {
+            addedAddresses.add(addressString);
+            suggest.value = addressString;
+            datalist.append(suggest);
+          }
         });
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -81,7 +93,7 @@ export default {
     },
     async search() {
       if (!this.store.destination) {
-        alert("Per favore inserisci una destinazione.");
+        alert("please entyer a destination.");
         return;
       }
       const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.store.destination)}.json?key=${TOMTOM_API_KEY}`;
