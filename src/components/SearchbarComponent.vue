@@ -1,14 +1,14 @@
 <template>
-  <div id="searchbar" class="mt-3">
-    <div class="d-flex container justify-content-between pt-2">
+  <div id="searchbar" class="mt-4 animated-searchbar">
+    <div class="d-flex container justify-content-between align-items-center">
       <div id="searchbar_input" class="px-3">
-        <label for="destination">where</label>
+        <label for="destination">Where</label>
         <input id="address" list="locality" type="text" aria-label="Destination" class="form-control"
-          placeholder="Search Destination" v-model="this.store.destination" @keyup.enter="search"  @input ="suggestion"/>
-        <datalist id="locality">
-        </datalist>
+          placeholder="Search Destination" v-model="this.store.destination" @keyup.enter="search" @input="suggestion" />
+        <datalist id="locality"></datalist>
       </div>
       <div>
+        <label for="radius">Radius</label>
         <select class="form-select" id="radius" v-model="this.store.radius">
           <option value="20" selected>20 km</option>
           <option value="25">25 km</option>
@@ -16,20 +16,11 @@
           <option value="180">180 km</option>
         </select>
       </div>
-     <!--  test push -->
-      <!-- <div>
-        <label for="guests">Ospiti</label>
-        <input
-          type="text"
-          aria-label="Guests"
-          class="form-control"
-          placeholder="Aggiungi ospiti"
-          v-model="searchQuery.guests"
-        />
-      </div> -->
-      <button class="btn" @click="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      <div>
+        <button class="rounded-5 btn btn-primary" @click="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,9 +38,9 @@ export default {
       store,
       router,
       params: null,
-       latitude: "",
-      longitude: "", 
-      radius: 20, 
+      latitude: "",
+      longitude: "",
+      radius: 20,
       result: [],
     };
   },
@@ -113,7 +104,7 @@ export default {
         .then((res) => {
           this.store.apartmentsFiltered = res.data.results.map(apartment => {
             apartment.image = JSON.parse(apartment.image);
-                    return apartment;
+            return apartment;
           });
           this.params = null;
           console.log(this.store.apartmentsFiltered);
@@ -127,10 +118,6 @@ export default {
     this.store.radius = 20;
   },
 };
-
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -139,8 +126,9 @@ export default {
 #searchbar {
   border-top: 5px solid #d98b2c;
   border-bottom: 5px solid #d98b2c;
-  width: 60%;
-  height: 85px;
+  width: 90%;
+  max-width: 800px;
+  height: auto;
   margin: 0 auto;
   position: absolute;
   top: 100px;
@@ -148,11 +136,67 @@ export default {
   right: 0;
   z-index: 1000;
   background-color: white;
-  border-radius: 100px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
-input {
+#searchbar.animated-searchbar {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#searchbar_input label,
+#searchbar_input input,
+#searchbar select,
+#searchbar button {
+  display: block;
+  width: 100%;
+}
+
+#searchbar_input {
+  flex: 2;
+}
+
+#searchbar_input input {
   border: none;
   outline: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  background-color: #f8f9fa;
+}
+
+#searchbar select {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: #f8f9fa;
+  border: none;
+}
+
+#searchbar button {
+  padding: 10px 20px;
+  background-color: #d98b2c;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#searchbar button:hover {
+  background-color: #bf751e;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  #searchbar {
+    width: 95%;
+  }
 }
 </style>
