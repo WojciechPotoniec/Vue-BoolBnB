@@ -63,15 +63,17 @@
               <input type="text" class="form-control" id="surname" v-model="surname">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="name@example.com" required
-                v-model="email">
+              <label for="email" class="form-label">Email address*</label>
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" required v-model="email">
+              <p v-if="errors.email" class="text-danger">{{ errors.email }}</p>
             </div>
             <div class="mb-3">
-              <label for="content" class="form-label">Content</label>
+              <label for="content" class="form-label">Content*</label>
               <textarea class="form-control" id="content" rows="3" required v-model="content"></textarea>
+              <p v-if="errors.content" class="text-danger">{{ errors.content }}</p>
             </div>
             <button id="msg-btn" type="submit" class="btn" @click="sendForm">Send</button>
+            <p v-if="messageSent" class="mt-3 text-success">Message sent!</p>
           </div>
         </transition>
       </div>
@@ -108,24 +110,44 @@ export default {
       ],
       activeIndexSlide: 0,
       showContactForm: false,
+      messageSent:false,
+      errors:{},
     };
   },
   methods: {
+    
     sendForm() {
-      const data = {
-        name: this.name,
-        surname: this.surname,
-        email: this.email,
-        content: this.content,
-        apartment_id: this.item.id,
-      };
-      axios.post(`${this.store.apiBaseUrl}/messages`, data).then((res) => {
-        console.log(res.data.status);
-        this.name = '';
-        this.email = '';
-        this.content = '';
-      });
-    },
+      this.errors = {};
+  
+      if (!this.email) {
+        this.errors.email = 'Email is a required field';
+      } else if (!this.email.includes('@') || !this.email.includes('.')) {
+      this.errors.email = 'this is not an email';
+      }
+      if (!this.content) {
+        this.errors.content = 'You must insert a text';
+      }
+      if (!this.errors.email && !this.errors.content) {
+    const data = {
+      name: this.name,
+      surname: this.surname,
+      email: this.email,
+      content: this.content,
+      apartment_id: this.item.id,
+    };
+    axios.post(`${this.store.apiBaseUrl}/messages`, data).then((res) => {
+      console.log(res.data.status);
+      this.name = '';
+      this.surname = '';
+      this.email = '';
+      this.content = '';
+      this.messageSent = true;
+      setTimeout(() => {
+        this.messageSent = false;
+      }, 3000);
+    });
+  }
+},
     nextSlide() {
       this.activeIndexSlide = (this.activeIndexSlide + 1) % this.slides.length;
     },
@@ -170,7 +192,20 @@ export default {
   mounted() {
     this.showMap();
   },
+  watch: {
+    email(newVal) {
+      if (newVal) {
+        this.errors.email = '';
+      }
+    },
+    content(newVal) {
+      if (newVal) {
+        this.errors.content = '';
+      }
+    }
+  }
 };
+
 </script>
 
 <style lang="scss" scoped>
