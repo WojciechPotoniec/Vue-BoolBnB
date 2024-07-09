@@ -98,6 +98,7 @@ export default {
       surname: '',
       content: '',
       email: '',
+      apartment_id: '',
       slides: [
         { image: "/public/img/appartamento1.jpg" },
         { image: "/public/img/appartamento2.jpg" },
@@ -116,6 +117,7 @@ export default {
         surname: this.surname,
         email: this.email,
         content: this.content,
+        apartment_id: this.item.id,
       };
       axios.post(`${this.store.apiBaseUrl}/messages`, data).then((res) => {
         console.log(res.data.status);
