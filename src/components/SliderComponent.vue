@@ -3,10 +3,10 @@
     <div id="slider-title" class="px-5 mb-4 mt-3">
       <h2>{{ item.title }}</h2>
     </div>
-    <div id="slider">
+    <!-- <div id="slider">
       <div class="slider-wrapper" tabindex="0" @keyup.up="prevSlide" @keyup.down="nextSlide">
         <div class="item">
-          <img :src="slides[activeIndexSlide].image" :alt="slides[activeIndexSlide].title" />
+          <img :src="[activeIndexSlide].item" :alt="slides[activeIndexSlide].title" />
           <div class="text">
             <h3>{{ slides[activeIndexSlide].title }}</h3>
           </div>
@@ -20,6 +20,14 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <!-- {{ item.image }} -->
+    <div class="image">
+      <img :src="firstImage" :alt="item.title">
+    </div>
+    <div class="image">
+      <!-- <img :src="getOneImg(item)" class="card-img-top" :alt="item.title" /> -->
+      <img :src="this.store.imgBasePath + this.firstImage" :alt="item.title">
     </div>
     <div id="slider-content" class="d-flex container mt-3">
       <div id="slider-info">
@@ -64,7 +72,8 @@
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email address*</label>
-              <input type="email" class="form-control" id="email" placeholder="name@example.com" required v-model="email">
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" required
+                v-model="email">
               <p v-if="errors.email" class="text-danger">{{ errors.email }}</p>
             </div>
             <div class="mb-3">
@@ -110,44 +119,57 @@ export default {
       ],
       activeIndexSlide: 0,
       showContactForm: false,
-      messageSent:false,
-      errors:{},
+      messageSent: false,
+      errors: {},
+      firstImage: ''  // Aggiungi questa variabile
     };
   },
   methods: {
-    
     sendForm() {
       this.errors = {};
-  
+
       if (!this.email) {
         this.errors.email = 'Email is a required field';
       } else if (!this.email.includes('@') || !this.email.includes('.')) {
-      this.errors.email = 'this is not an email';
+        this.errors.email = 'this is not an email';
       }
       if (!this.content) {
         this.errors.content = 'You must insert a text';
       }
       if (!this.errors.email && !this.errors.content) {
-    const data = {
-      name: this.name,
-      surname: this.surname,
-      email: this.email,
-      content: this.content,
-      apartment_id: this.item.id,
-    };
-    axios.post(`${this.store.apiBaseUrl}/messages`, data).then((res) => {
-      console.log(res.data.status);
-      this.name = '';
-      this.surname = '';
-      this.email = '';
-      this.content = '';
-      this.messageSent = true;
-      setTimeout(() => {
-        this.messageSent = false;
-      }, 3000);
-    });
-  }
-},
+        const data = {
+          name: this.name,
+          surname: this.surname,
+          email: this.email,
+          content: this.content,
+          apartment_id: this.item.id,
+        };
+        axios.post(`${this.store.apiBaseUrl}/messages`, data).then((res) => {
+          console.log(res.data.status);
+          this.name = '';
+          this.surname = '';
+          this.email = '';
+          this.content = '';
+          this.messageSent = true;
+          setTimeout(() => {
+            this.messageSent = false;
+          }, 3000);
+        });
+      }
+    },
+    showImg() {
+      // Supponiamo che this.item.image sia una stringa JSON
+      let imageString = this.item.image;
+
+      // Fai il parsing della stringa JSON per ottenere l'array
+      let images = JSON.parse(imageString);
+
+      // Accedi alla prima stringa
+      let firstImage = images[0];
+
+      // Imposta la variabile firstImage
+      this.firstImage = this.store.imgBasePath + firstImage;
+    },
     nextSlide() {
       this.activeIndexSlide = (this.activeIndexSlide + 1) % this.slides.length;
     },
@@ -188,9 +210,13 @@ export default {
     toggleContactForm() {
       this.showContactForm = !this.showContactForm;
     },
+    handleImageError(event) {
+      event.target.src = ""; // Fallback image URL
+    }
   },
   mounted() {
     this.showMap();
+    this.showImg();
   },
   watch: {
     email(newVal) {
@@ -205,7 +231,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -388,8 +413,7 @@ export default {
 }
 
 .fade-enter,
-.fade-leave-to
-  {
+.fade-leave-to {
   opacity: 0;
 }
 
