@@ -1,13 +1,12 @@
 <template>
   <div id="searchbar" class="mt-4 animated-searchbar">
-    <div class="d-flex container justify-content-between align-items-center">
+    <div class="d-flex flex-wrap justify-content-center align-items-center">
       <div id="searchbar_input" class="px-3">
         <label for="destination">Where</label>
         <input id="address" list="locality" type="text" aria-label="Destination" class="form-control"
           placeholder="Search Destination" v-model="this.store.destination" @keyup.enter="search" @input="suggestion" />
-        <datalist id="locality"></datalist>
       </div>
-      <div>
+      <div id="searchbar_radius" class="px-3">
         <label for="radius">Radius</label>
         <select class="form-select" id="radius" v-model="this.store.radius">
           <option value="20" selected>20 km</option>
@@ -16,7 +15,7 @@
           <option value="180">180 km</option>
         </select>
       </div>
-      <div>
+      <div id="searchbar_button" class="px-3">
         <button class="rounded-5 btn btn-primary" @click="search">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
@@ -24,6 +23,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -154,6 +154,7 @@ export default {
   transform: translateY(-20px);
   opacity: 0;
   transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  text-align: center;
 }
 
 #searchbar.animated-searchbar {
@@ -161,16 +162,9 @@ export default {
   opacity: 1;
 }
 
-#searchbar_input label,
-#searchbar_input input,
-#searchbar select,
-#searchbar button {
-  display: block;
-  width: 100%;
-}
-
 #searchbar_input {
   flex: 2;
+  margin: 0 10px;
 }
 
 #searchbar_input input {
@@ -181,17 +175,28 @@ export default {
   margin-top: 5px;
   margin-bottom: 10px;
   background-color: #f8f9fa;
+  width: 100%;
 }
 
-#searchbar select {
+#searchbar_radius {
+  width: 120px;
+  margin: 0 10px;
+}
+
+#searchbar_radius select {
   padding: 10px;
   border-radius: 5px;
   margin-top: 5px;
   background-color: #f8f9fa;
   border: none;
+  width: 100%;
 }
 
-#searchbar button {
+#searchbar_button {
+  margin: 0 10px;
+}
+
+#searchbar_button button {
   padding: 10px 20px;
   background-color: #d98b2c;
   border: none;
@@ -201,7 +206,7 @@ export default {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#searchbar button:hover {
+#searchbar_button button:hover {
   background-color: #bf751e;
   transform: scale(1.05);
 }

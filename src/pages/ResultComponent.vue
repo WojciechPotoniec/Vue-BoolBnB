@@ -1,40 +1,35 @@
 <template>
-  <div class="mt-5 pt-5 container" id="results">
-    <h1 class="mt-3">Results</h1>
+  <div>
+    <SearchbarComponent @search="handleSearch" />
+    <div class="mt-5 pt-5 container" id="results">
+      <h1 class="mt-3">Results</h1>
 
-    <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
-      <div class="button-group d-flex flex-wrap mb-3">
-        <button v-for="service in store.services" :key="service.id"
-          :class="['service-button', 'styled-input', { 'selected': selectedServices.includes(service.id) }]"
-          @click="toggleService(service.id)">
-          {{ service.name }}
-        </button>
-        <div class="filters d-flex flex-wrap">
-          <div class="form-group ">
-            <input type="number" class="form-control styled-input" placeholder="beds" v-model.number="minBeds"
-              @change="applyFilters" min="0" max="15">
-          </div>
-          <div class="form-group ms-4">
-            <input type="number" class="form-control styled-input" placeholder="rooms" v-model.number="minRooms"
-              @change="applyFilters" min="0" max="15">
-          </div>
-          <div class="form-group ms-4">
-            <select class="form-select styled-input" v-model="store.radius" @change="applyFilters">
-              <option value="" disabled selected>Radius</option>
-              <option value="25">25 km</option>
-              <option value="30">30 km</option>
-              <option value="180">180 km</option>
-            </select>
+      <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
+        <div class="button-group d-flex flex-wrap mb-3">
+          <button v-for="service in store.services" :key="service.id"
+            :class="['service-button', 'styled-input', { 'selected': selectedServices.includes(service.id) }]"
+            @click="toggleService(service.id)">
+            {{ service.name }}
+          </button>
+          <div class="filters d-flex flex-wrap">
+            <div class="form-group ">
+              <input type="number" class="form-control styled-input" placeholder="beds" v-model.number="minBeds"
+                @change="applyFilters" min="0" max="15">
+            </div>
+            <div class="form-group ms-4">
+              <input type="number" class="form-control styled-input" placeholder="rooms" v-model.number="minRooms"
+                @change="applyFilters" min="0" max="15">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row mt-3">
-      <h2>Results for {{ capitalizedDestination }}</h2>
-      <p>The number of apartments for your search are: {{ store.apartmentsUltraFiltered.length }}</p>
-      <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsUltraFiltered" :key="index">
-        <CardComponent :card="apartment" :getOneImg="getOneImg" />
+      <div class="row mt-3">
+        <h2>Results for {{ capitalizedDestination }}</h2>
+        <p>The number of apartments for your search are: {{ store.apartmentsUltraFiltered.length }}</p>
+        <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsFiltered" :key="index">
+          <CardComponent :card="apartment" :getOneImg="getOneImg" />
+        </div>
       </div>
     </div>
   </div>
@@ -44,11 +39,13 @@
 import axios from "axios";
 import { store } from "../store.js";
 import CardComponent from "@/components/CardComponent.vue";
+import SearchbarComponent from "@/components/SearchbarComponent.vue";
 
 export default {
   name: "ResultComponent",
   components: {
     CardComponent,
+    SearchbarComponent
   },
   data() {
     return {
@@ -130,6 +127,28 @@ export default {
       }
       this.applyFilters();
     },
+
+    handleSearch(destination) {
+      this.store.destination = destination;
+      this.search();
+    },
+
+    async search() {
+      if (!this.store.destination) {
+        alert("Please enter a destination.");
+        return;
+      }
+      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.store.destination)}.json?key=${process.env.VUE_APP_TOMTOM_API_KEY}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        this.store.latitude = data.results[0].position.lat;
+        this.store.longitude = data.results[0].position.lon;
+        await this.getApartmentsUltraFiltered();
+      } catch (error) {
+        console.error("Error during search:", error);
+      }
+    },
   },
   computed: {
     capitalizedDestination() {
@@ -138,6 +157,7 @@ export default {
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import "../assets/styles/partials/variables.scss";
