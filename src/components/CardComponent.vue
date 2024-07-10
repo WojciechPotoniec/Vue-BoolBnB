@@ -1,4 +1,5 @@
 <template>
+  <SearchbarComponent/>
   <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
     <div class="container stack">
       <div class="card">
@@ -13,6 +14,7 @@
             <span class="beds">{{ card.beds_num }} beds</span>
             <span class="bathrooms">{{ card.bathrooms_num }} bathrooms</span>
             <span class="area">{{ card.square_meters }} m²</span>
+            <span class="area" v-if="isValidDistance(card.distance)">Distance: {{formatDistance(card.distance) }} km</span>
           </div>
         </div>
       </div>
@@ -22,8 +24,12 @@
 
 <script>
 import { store } from "../store";
+import SearchbarComponent from "./SearchbarComponent.vue";
 export default {
   name: "CardComponent",
+  components: {
+    SearchbarComponent
+  },
   props: {
     card: {
       type: Object,
@@ -37,6 +43,15 @@ export default {
   methods: {
     handleImageError(event) {
       event.target.src = "public/img/appartamento2.jpg"; // Fallback image URL
+    },
+    formatDistance(value) {
+      if (value == null || isNaN(value)) {
+        return "N/A" ;
+      }
+      return parseFloat(value).toFixed(2);
+    },
+    isValidDistance(value) {
+      return value != null && !isNaN(value);
     }
   }
 };
@@ -44,9 +59,11 @@ export default {
 
 <style lang="scss" scoped>
 @use "../assets/styles/partials/variables" as *;
-a{
+
+a {
   text-decoration: none;
 }
+
 img {
   display: block;
   max-width: 100%;
@@ -90,6 +107,7 @@ img {
   &:hover {
     transform: scale(1.05);
     transition: 1s;
+
     .text {
       color: $secondary-gold;
       transition: 0.2s ease;
