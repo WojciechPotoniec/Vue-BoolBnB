@@ -1,7 +1,6 @@
 <template>
-  
-  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
-    <div class="container stack" @click="viewCount">
+  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }"  @click="viewCount(card.id)">
+    <div class="container stack">
       <div class="card">
         <div class="image">
           <img :src="getOneImg(card)" class="card-img-top" :alt="card.title" @error="handleImageError" />
@@ -42,8 +41,15 @@ export default {
   },
   methods: {
 
-viewCount(){
-axios.post(this.store.api)
+viewCount(id){
+ 
+  const data = {
+    apartmentId : id,
+  }
+axios.post(`${this.store.apiBaseUrl}/views`, data).then((res) => {
+  console.log(data.apartmentId.id);
+  console.log('ciao Jacqueline');
+});
 },
 
     handleImageError(event) {
