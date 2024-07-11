@@ -5,6 +5,11 @@
         <label for="destination">Where</label>
         <input id="address" list="locality" type="text" aria-label="Destination" class="form-control"
           placeholder="Search Destination" v-model="this.store.destination" @keyup.enter="search" @input="suggestion" />
+
+        <datalist id="locality">
+
+        </datalist>
+
       </div>
       <div id="searchbar_radius" class="px-3">
         <label for="radius">Radius</label>
@@ -46,7 +51,7 @@ export default {
   },
   methods: {
     async suggestion() {
-      const url2 = `https://api.tomtom.com/search/2/search/${encodeURIComponent(this.store.destination)}.json?key=${TOMTOM_API_KEY}&countrySet=it-IT&limit=10`;
+      const url2 = `https://api.tomtom.com/search/2/search/${encodeURIComponent(this.store.destination)}.json?key=${TOMTOM_API_KEY}&countrySet=IT&limit=10`;
       try {
         const response = await fetch(url2);
         const data = await response.json();
@@ -56,7 +61,7 @@ export default {
 
         // Utilizza un Set per tenere traccia degli indirizzi aggiunti
         const addedAddresses = new Set();
-        
+
         myArray.forEach(result => {
           let suggest = document.createElement('option');
           let addressString = '';
