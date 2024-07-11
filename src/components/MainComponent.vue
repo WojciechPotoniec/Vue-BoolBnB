@@ -16,6 +16,9 @@
           <CardComponent :card="apartment" :getOneImg="getOneImg" />
         </div>
       </div>
+      <div>
+        <GuaranteeComponent />
+      </div>
     </div>
   </main>
 </template>
@@ -24,10 +27,12 @@
 import { store } from '../store';
 import axios from 'axios';
 import CardComponent from './CardComponent.vue';
+import GuaranteeComponent from './GuaranteeComponent.vue';
 export default {
   name: 'MainComponent',
   components: {
-    CardComponent
+    CardComponent,
+    GuaranteeComponent
   },
   data() {
     return {
