@@ -27,7 +27,7 @@
 
       <div class="row mt-3">
         <h2>Results for {{ capitalizedDestination }}</h2>
-        <p>The number of apartments for your search are: {{ store.apartmentsUltraFiltered.length }}</p>
+        <p>The number of apartments for your search are: {{ store.apartmentsFiltered.length }}</p>
         <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsFiltered" :key="index">
           <CardComponent :card="apartment" :getOneImg="getOneImg" />
         </div>
