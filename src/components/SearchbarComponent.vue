@@ -117,6 +117,7 @@ export default {
           this.store.apartmentsFiltered = res.data.results.map(apartment => {
             apartment.image = JSON.parse(apartment.image);
             return apartment;
+            //console.log(this.store.apartmentsFiltered);
           });
           this.params = null;
           console.log(this.store.apartmentsFiltered);

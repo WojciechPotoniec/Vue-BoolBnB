@@ -113,6 +113,7 @@ export default {
             }
             return apartment;
           });
+          this.store.apartmentsFiltered = this.store.apartmentsUltraFiltered;
         })
         .catch((error) => {
           console.error('Error fetching apartments:', error);
@@ -129,26 +130,9 @@ export default {
       this.applyFilters();
     },
 
-    handleSearch(destination) {
-      this.store.destination = destination;
+    handleSearch() {
+      // this.store.destination ;
       this.search();
-    },
-
-    async search() {
-      if (!this.store.destination) {
-        alert("Please enter a destination.");
-        return;
-      }
-      const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(this.store.destination)}.json?key=${process.env.VUE_APP_TOMTOM_API_KEY}`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.store.latitude = data.results[0].position.lat;
-        this.store.longitude = data.results[0].position.lon;
-        await this.getApartmentsUltraFiltered();
-      } catch (error) {
-        console.error("Error during search:", error);
-      }
     },
   },
   computed: {
@@ -162,9 +146,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/styles/partials/variables.scss";
-#results-container{
+
+#results-container {
   margin-top: 200px;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
