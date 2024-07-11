@@ -138,7 +138,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 @import "../assets/styles/partials/variables.scss";
 
@@ -159,10 +158,7 @@ export default {
 }
 
 #results {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
   animation: fadeIn 1s ease-out;
 }
 
