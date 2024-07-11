@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div id="search">
     <SearchbarComponent @search="handleSearch" />
+  </div>
+  <div id="results-container" class="">
     <div class="mt-5 pt-5 container" id="results">
       <h1 class="mt-3">Results</h1>
-
       <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
         <div class="button-group d-flex flex-wrap mb-3">
           <button v-for="service in store.services" :key="service.id"
@@ -161,7 +162,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/styles/partials/variables.scss";
-
+#results-container{
+  margin-top: 200px;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
