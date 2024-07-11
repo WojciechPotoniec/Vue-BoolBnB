@@ -239,10 +239,6 @@ button.btn {
   animation: fadeIn 1s ease-out 0.8s backwards;
 }
 
-button.btn:hover {
-  background-color: #0056b3;
-}
-
 #results h2 {
   font-size: 24px;
   margin-top: 20px;
