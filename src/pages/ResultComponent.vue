@@ -1,6 +1,6 @@
 <template>
   <div id="search">
-    <SearchbarComponent @search="handleSearch" />
+    <SearchbarComponent />
   </div>
   <div id="results-container" class="">
     <div class="mt-5 pt-5 container" id="results">
