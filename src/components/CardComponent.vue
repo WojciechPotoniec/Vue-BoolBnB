@@ -1,7 +1,7 @@
 <template>
-  <SearchbarComponent/>
+  
   <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }">
-    <div class="container stack">
+    <div class="container stack" @click="viewCount">
       <div class="card">
         <div class="image">
           <img :src="getOneImg(card)" class="card-img-top" :alt="card.title" @error="handleImageError" />
@@ -41,6 +41,11 @@ export default {
     }
   },
   methods: {
+
+viewCount(){
+axios.post(this.store.api)
+},
+
     handleImageError(event) {
       event.target.src = "public/img/appartamento2.jpg"; // Fallback image URL
     },
