@@ -16,9 +16,9 @@
           <CardComponent :card="apartment" :getOneImg="getOneImg" />
         </div>
       </div>
-      <div>
-        <GuaranteeComponent />
-      </div>
+    </div>
+    <div class="guarantee"> 
+      <GuaranteeComponent />
     </div>
   </main>
 </template>
@@ -177,5 +177,8 @@ img {
 
 #main-title {
   color: $secondary-gold;
+}
+.guarantee {
+  background-color: rgba(29, 60, 76, 0.3);
 }
 </style>
