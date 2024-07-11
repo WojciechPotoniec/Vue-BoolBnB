@@ -1,6 +1,16 @@
 <template>
   <main>
     <div class="container">
+      <div class="m-3 pt-4 mx-5 ">
+        <h3 id="main-title">La Selezione di Boolbnb</h3>
+        <div class="d-flex flex-wrap">
+          <div class="reservation-info w-50">
+            <p>Che sia al mare, in Montagna o in città, dai un'occhiata alle <strong>proposte di questa
+                settimana,</strong>
+              innamorati di un luogo dove puoi passare le tue vacanze e contatta il proprietario</p>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartments" :key="index">
           <CardComponent :card="apartment" :getOneImg="getOneImg" />
@@ -100,6 +110,7 @@ img {
     }
   }
 }
+
 .card {
   color: $white;
   aspect-ratio: 3 / 2;
@@ -140,6 +151,7 @@ img {
     transform: translatey(2%) rotate(6deg);
   }
 }
+
 .image {
   width: 100%;
   // border: 2px solid $secondary-gold;
@@ -149,11 +161,16 @@ img {
   position: relative;
   overflow: hidden;
 }
+
 .text {
   color: $white;
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 0 10px 5px 0;
+}
+
+#main-title {
+  color: $secondary-gold;
 }
 </style>
