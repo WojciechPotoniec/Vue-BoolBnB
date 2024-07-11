@@ -43,9 +43,7 @@ export default {
       logo: "../public/img/logo.png",
         links: [
           //da sistemare assolutamente!!!
-        { label: "Home", routeName: "home" },
-        { label: "Contact", routeName: "contact" },
-        { label: "About Us", routeName: "about" }
+        { label: "Home", routeName: "home" }
       ],
       isFixed: false, // Stato per tracciare se l'header è fisso
     };
