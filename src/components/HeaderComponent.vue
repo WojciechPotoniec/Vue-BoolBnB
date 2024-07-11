@@ -1,13 +1,12 @@
 <template>
   <header :class="{ 'fixed-header': isFixed }">
-    <div class="d-flex justify-content-between" id="header-nav">
-      <div class="d-flex">
+    <div class="d-flex justify-content-between align-items-center" id="header-nav">
+      <div class="d-flex align-items-center">
         <div id="logo">
           <img :src="logo" alt="Logo">
         </div>
-        <div id="header_links" class="d-flex">
+        <div id="header_links" class="d-flex" ref="navLinks">
           <ul>
-            <!-- DA RIVEDERE -->
             <li v-for="(link, index) in links" :key="index">
               <router-link :to="{ name: link.routeName }" class="nav-link" active-class="active">
                 {{ link.label }}
@@ -20,12 +19,8 @@
         <ul>
           <li>
             <a href="http://localhost:8000/login" class="nav-link">
-              <span>Login</span>
-            </a>
-          </li>
-          <li>
-            <a href="http://localhost:8000/register" class="nav-link">
-              <span>sign in</span>
+              <i class="fa-solid fa-user"></i>
+              <span class="mx-2">Admin Login</span>
             </a>
           </li>
         </ul>
@@ -33,7 +28,6 @@
     </div>
   </header>
 </template>
-
 
 <script>
 export default {
