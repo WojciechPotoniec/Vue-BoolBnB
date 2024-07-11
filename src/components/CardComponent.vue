@@ -42,13 +42,12 @@ export default {
   methods: {
 
 viewCount(id){
- 
+ console.log(id);
   const data = {
     apartmentId : id,
   }
 axios.post(`${this.store.apiBaseUrl}/views`, data).then((res) => {
   console.log(data.apartmentId.id);
-  console.log('ciao Jacqueline');
 });
 },
 
