@@ -154,8 +154,7 @@ export default {
   padding: 10px 20px;
   transform: translateY(-20px);
   opacity: 0;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-  text-align: center;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out
 }
 
 #searchbar.animated-searchbar {
@@ -173,8 +172,6 @@ export default {
   outline: none;
   padding: 10px;
   border-radius: 5px;
-  margin-top: 5px;
-  margin-bottom: 10px;
   background-color: #f8f9fa;
   width: 100%;
 }
