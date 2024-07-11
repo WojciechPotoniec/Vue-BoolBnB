@@ -1,33 +1,28 @@
 <template>
   <div id="slider-container" class="container pt-5 pb-5 mt-5">
     <div id="slider-title" class="px-5 mb-4 mt-3">
-      <h2>{{ item.title }}</h2>
+      <h2 class="mx-5 pt-3">{{ item.title }}</h2>
     </div>
-    <!-- <div id="slider">
-      <div class="slider-wrapper" tabindex="0" @keyup.up="prevSlide" @keyup.down="nextSlide">
-        <div class="item">
-          <img :src="[activeIndexSlide].item" :alt="slides[activeIndexSlide].title" />
-          <div class="text">
-            <h3>{{ slides[activeIndexSlide].title }}</h3>
+    <div class="slider-cont">
+      <div id="slider">
+        <div class="slider-wrapper" tabindex="0" @keyup.up="prevSlide" @keyup.down="nextSlide">
+          <div class="item">
+            <img :src="activeImage" :alt="item.title" />
           </div>
-        </div>
-        <div class="thumbs">
-          <div class="prev" @click="prevSlide"></div>
-          <div class="next" @click="nextSlide"></div>
-          <div class="thumb" :class="{ active: index === activeIndexSlide }" v-for="(slide, index) in slides"
-            :key="index" @mouseover="goToSlide(index)">
-            <img :src="slide.image" :alt="slide.title" />
+          <div class="thumbs">
+            <div 
+              v-for="(image, index) in images" 
+              :key="index" 
+              class="thumb" 
+              :class="{ active: index === activeIndexSlide }" 
+              @mouseover="goToSlide(index)"
+            >
+              <img :src="image" :alt="'Image ' + (index + 1)" />
+            </div>
           </div>
         </div>
       </div>
-    </div> -->
-    <!-- {{ item.image }} -->
-    <div class="image">
-      <img :src="firstImage" :alt="item.title">
-    </div>
-    <div class="image">
-      <!-- <img :src="getOneImg(item)" class="card-img-top" :alt="item.title" /> -->
-      <img :src="this.store.imgBasePath + this.firstImage" :alt="item.title">
+
     </div>
     <div id="slider-content" class="d-flex container mt-3">
       <div id="slider-info">
@@ -72,8 +67,7 @@
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email address*</label>
-              <input type="email" class="form-control" id="email" placeholder="name@example.com" required
-                v-model="email">
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" required v-model="email">
               <p v-if="errors.email" class="text-danger">{{ errors.email }}</p>
             </div>
             <div class="mb-3">
@@ -110,28 +104,21 @@ export default {
       content: '',
       email: '',
       apartment_id: '',
-      slides: [
-        { image: "/public/img/appartamento1.jpg" },
-        { image: "/public/img/appartamento2.jpg" },
-        { image: "/public/img/appartamento3.jpg" },
-        { image: "/public/img/salotto.jpg" },
-        { image: "/public/img/letto.jpg" },
-      ],
       activeIndexSlide: 0,
       showContactForm: false,
       messageSent: false,
       errors: {},
-      firstImage: ''  // Aggiungi questa variabile
+      images: [], 
+      activeImage: ''
     };
   },
   methods: {
     sendForm() {
       this.errors = {};
-
       if (!this.email) {
         this.errors.email = 'Email is a required field';
       } else if (!this.email.includes('@') || !this.email.includes('.')) {
-        this.errors.email = 'this is not an email';
+        this.errors.email = 'This is not an email';
       }
       if (!this.content) {
         this.errors.content = 'You must insert a text';
@@ -158,26 +145,22 @@ export default {
       }
     },
     showImg() {
-      // Supponiamo che this.item.image sia una stringa JSON
-      let imageString = this.item.image;
-
-      // Fai il parsing della stringa JSON per ottenere l'array
-      let images = JSON.parse(imageString);
-
-      // Accedi alla prima stringa
-      let firstImage = images[0];
-
-      // Imposta la variabile firstImage
-      this.firstImage = this.store.imgBasePath + firstImage;
+      const imageString = this.item.image;
+      const images = JSON.parse(imageString);
+      this.images = images.map(img => this.store.imgBasePath + img);
+      this.activeImage = this.images[0];
     },
     nextSlide() {
-      this.activeIndexSlide = (this.activeIndexSlide + 1) % this.slides.length;
+      this.activeIndexSlide = (this.activeIndexSlide + 1) % this.images.length;
+      this.activeImage = this.images[this.activeIndexSlide];
     },
     prevSlide() {
-      this.activeIndexSlide = (this.activeIndexSlide - 1 + this.slides.length) % this.slides.length;
+      this.activeIndexSlide = (this.activeIndexSlide - 1 + this.images.length) % this.images.length;
+      this.activeImage = this.images[this.activeIndexSlide];
     },
     goToSlide(index) {
       this.activeIndexSlide = index;
+      this.activeImage = this.images[index];
     },
     showMap() {
       const initMap = () => {
@@ -257,6 +240,11 @@ export default {
   padding: 0.75rem 1rem;
   font-size: 1rem;
 }
+.slider-cont{
+  width: 900px;
+  height: 800px;
+  margin: 0 auto;
+}
 
 #slider {
   width: 100%;
@@ -267,7 +255,7 @@ export default {
 }
 
 .slider-wrapper {
-  width: 1200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -300,13 +288,14 @@ export default {
 .thumbs {
   display: flex;
   width: 100%;
-  height: 100px;
   background: #000;
   position: relative;
+  justify-content: space-between;
 }
 
 .thumb {
-  width: calc((100%) / 5);
+  flex: 1;
+  margin: 5px;
   opacity: 0.5;
   cursor: pointer;
 }
