@@ -129,11 +129,6 @@ export default {
       }
       this.applyFilters();
     },
-
-    handleSearch() {
-      // this.store.destination ;
-      this.search();
-    },
   },
   computed: {
     capitalizedDestination() {
