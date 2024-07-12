@@ -59,7 +59,6 @@ export default {
       const data = {
         apartment_id: apartment.id,
       };
-      console.log(data.slug);
       axios.post(`${this.store.apiBaseUrl}/views`, data).then((res) => {
         console.log(data.apartment_id);
       });

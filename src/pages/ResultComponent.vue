@@ -29,7 +29,7 @@
         <h2>Results for {{ capitalizedDestination }}</h2>
         <p>The number of apartments for your search are: {{ store.apartmentsFiltered.length }}</p>
         <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsFiltered" :key="index">
-          <CardComponent :card="apartment" :getOneImg="getOneImg" />
+          <CardComponent :card="apartment" :getOneImg="getOneImg" :viewCount="viewCount" />
         </div>
       </div>
     </div>
@@ -61,6 +61,17 @@ export default {
     this.getApartmentsUltraFiltered();
   },
   methods: {
+    viewCount(apartment) {
+      console.log(apartment.id);
+      const data = {
+        apartment_id: apartment.id,
+      };
+      axios.post(`${this.store.apiBaseUrl}/views`, data).then((res) => {
+        console.log(data.apartment_id);
+      });
+    },
+
+
     getServices() {
       axios.get(this.store.apiBaseUrl + '/services')
         .then((res) => {
