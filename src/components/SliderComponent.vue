@@ -291,6 +291,7 @@ export default {
   background: #000;
   position: relative;
   justify-content: space-between;
+  max-height: 250px;
 }
 
 .thumb {
