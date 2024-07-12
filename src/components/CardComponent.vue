@@ -1,5 +1,5 @@
 <template>
-  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }"  @click="viewCount(card.id)">
+  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }"  @click="viewCount(card)">
     <div class="container stack">
       <div class="card">
         <div class="image">
@@ -37,7 +37,11 @@ export default {
     getOneImg: {
       type: Function,
       required: true
-    }
+    },
+    viewCount: {
+      type: Function,
+      required: true
+    },
   },
   methods: {
 

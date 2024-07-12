@@ -13,7 +13,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartments" :key="index">
-          <CardComponent :card="apartment" :getOneImg="getOneImg" />
+          <CardComponent :card="apartment" :getOneImg="getOneImg" :viewCount="viewCount" />
         </div>
       </div>
     </div>
@@ -54,6 +54,17 @@ export default {
       }
       return ''; // o this.store.imgBasePath + 'default.jpg' per un'immagine di default
     },
+    viewCount(apartment) {
+      console.log(apartment.id);
+      const data = {
+        apartment_id: apartment.id,
+      };
+      console.log(data.slug);
+      axios.post(`${this.store.apiBaseUrl}/views`, data).then((res) => {
+        console.log(data.apartment_id);
+      });
+    },
+
     getAllApartments() {
       axios.get(this.store.apiBaseUrl + '/apartments').then((res) => {
         console.log(res.data);
