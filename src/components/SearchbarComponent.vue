@@ -14,6 +14,9 @@
       <div id="searchbar_radius" class="px-3">
         <label for="radius">Radius</label>
         <select class="form-select" id="radius" v-model="this.store.radius">
+          <option value="5">5 km</option>
+          <option value="10">10 km</option>
+          <option value="15">15 km</option>
           <option value="20" selected>20 km</option>
           <option value="25">25 km</option>
           <option value="30">30 km</option>
