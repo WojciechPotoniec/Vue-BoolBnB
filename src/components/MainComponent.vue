@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="container">
-      <div class="m-3 pt-4 mx-5 ">
+      <div class="m-3 pt-4 ">
         <h3 id="main-title" class="text-center">The Boolbnb Selection</h3>
         <div class="d-flex flex-wrap">
           <div class="reservation-info w-50 text-center">
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartments" :key="index">
+        <div class="col-12 col-xl-4 col-lg-6 mt-5" v-for="(apartment, index) in store.apartments" :key="index">
           <CardComponent :card="apartment" :getOneImg="getOneImg" :viewCount="viewCount" />
         </div>
       </div>
@@ -78,19 +78,6 @@ export default {
       });
     },
   },
-  //**! METODO PER PRENDERE TUTTI GLI APARTMENT CON L'IMMAGINE IN FORMATO ARRAY SPLITTATO */
-  // methods: {
-  //     getAllApartments(){
-  //         axios.get(this.store.apiBaseUrl + '/apartments', { params: this.params }).then((res)=>{
-  //             this.store.apartments = res.data.results.map(apartment => {
-  //                 apartment.image = JSON.parse(apartment.image);
-  //                 return apartment;
-  //             });
-  //             this.params = null;
-  //             console.log(this.store.apartments)
-  //         })
-  //     }
-  // },
   mounted() {
     this.getAllApartments();
     console.log(this.store.apartments)
@@ -110,24 +97,6 @@ img {
   object-fit: cover;
 }
 
-.stack {
-  width: 85%;
-  max-width: 300px;
-  padding: 30px;
-  transition: 0.25s ease;
-
-  &:hover {
-    transform: rotate(5deg);
-
-    .card:before {
-      transform: translatey(-2%) rotate(-4deg);
-    }
-
-    .card:after {
-      transform: translatey(2%) rotate(4deg);
-    }
-  }
-}
 
 .card {
   color: $white;
@@ -139,35 +108,6 @@ img {
   transition: 0.15s ease;
   cursor: pointer;
   padding: 10% 10% 10%;
-
-  &:before,
-  &:after {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border: 2px solid $secondary-gold;
-    border-radius: 10px;
-    background-image: url("https://picsum.photos/seed/picsum/200/200");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.75;
-    transform-origin: center center;
-    z-index: -1;
-    transition: 0.15s ease;
-    top: 0;
-    left: 0;
-  }
-
-  &:before {
-    transform: translatey(-2%) rotate(-6deg);
-  }
-
-  &:after {
-    transform: translatey(2%) rotate(6deg);
-  }
 }
 
 .image {
@@ -193,5 +133,9 @@ img {
 }
 .guarantee {
   background-color: rgba(29, 60, 76, 0.3);
+}
+
+.debug{
+  border: 2px solid black;
 }
 </style>
