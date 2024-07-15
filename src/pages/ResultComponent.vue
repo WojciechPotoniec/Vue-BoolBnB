@@ -4,27 +4,31 @@
   </div>
   <div id="results-container" class="">
     <div class="mt-5 pt-5 container" id="results">
-      <h1 class="mt-3">Results</h1>
+      <!-- <h1 class="mt-3">Results</h1> -->
+      <h4 class="ml-3">Filters:</h4>
       <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
         <div class="button-group d-flex flex-wrap mb-3">
+
           <button v-for="service in store.services" :key="service.id"
             :class="['service-button', 'styled-input', { 'selected': selectedServices.includes(service.id) }]"
             @click="toggleService(service.id)">
             {{ service.name }}
           </button>
-          <div class="filters d-flex flex-wrap">
-            <div class="form-group ">
-              <input type="number" class="form-control styled-input" placeholder="beds" v-model.number="minBeds"
-                @change="applyFilters" min="0" max="15">
-            </div>
-            <div class="form-group ms-4">
-              <input type="number" class="form-control styled-input" placeholder="rooms" v-model.number="minRooms"
-                @change="applyFilters" min="0" max="15">
-            </div>
+          
+        </div>
+      </div>
+      <div class="filters-wrapper">
+        <div class="filters d-flex flex-wrap justify-content-center">
+          <div class="form-group text-center me-4">
+            <span >number of beds:</span>
+            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minBeds" @change="applyFilters" min="1" max="15">
+          </div>
+          <div class="form-group text-center">
+            <span>number of rooms:</span>
+            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minRooms" @change="applyFilters" min="1" max="15">
           </div>
         </div>
       </div>
-
       <div class="row mt-3">
         <h2>Results for {{ capitalizedDestination }}</h2>
         <p>The number of apartments for your search are: {{ store.apartmentsFiltered.length }}</p>
