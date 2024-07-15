@@ -6,14 +6,24 @@
           <img :src="getOneImg(card)" class="card-img-top" :alt="card.title" @error="handleImageError" />
           <div class="text">{{ card.title }}</div>
         </div>
-        <div class="card-body mt-3">
+        <div class="card-body">
           <p class="address text-dark">{{ card.address }}</p>
           <div class="details">
-            <span class="rooms">{{ card.rooms_num }} rooms</span>
-            <span class="beds">{{ card.beds_num }} beds</span>
-            <span class="bathrooms">{{ card.bathrooms_num }} bathrooms</span>
-            <span class="area">{{ card.square_meters }} m²</span>
-            <span class="area" v-if="isValidDistance(card.distance)">Distance: {{ formatDistance(card.distance) }} km</span>
+            <span class="rooms">
+              <i class="fa fa-door-open"></i> {{ card.rooms_num }} rooms
+            </span>
+            <span class="beds">
+              <i class="fa fa-bed"></i> {{ card.beds_num }} beds
+            </span>
+            <span class="bathrooms">
+              <i class="fa fa-bath"></i> {{ card.bathrooms_num }} bathrooms
+            </span>
+            <span class="area">
+              <i class="fa fa-ruler-combined"></i> {{ card.square_meters }} m²
+            </span>
+            <span class="area" v-if="isValidDistance(card.distance)">
+              <i class="fa fa-map-marker-alt"></i> Distance: {{ formatDistance(card.distance) }} km
+            </span>
           </div>
         </div>
       </div>
@@ -102,6 +112,7 @@ img {
     height: 300px;
   }
 }
+
 .text {
   color: $white;
   position: absolute;
@@ -118,20 +129,25 @@ img {
   .address {
     font-size: 1.1em;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   .details {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5px;
 
     span {
       font-size: 0.85em;
-      padding: 5px 10px;
-      border: 2px solid $secondary-gold;
-      border-radius: 5px;
-      color: $secondary-gold;
+      padding: 3px 2px;
+
+      color: grey;
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 5px;
+      }
     }
   }
 }
