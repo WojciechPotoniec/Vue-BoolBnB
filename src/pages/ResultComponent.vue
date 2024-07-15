@@ -8,24 +8,24 @@
       <h4 class="ml-3">Filters:</h4>
       <div class="filters d-flex flex-wrap mt-4 justify-content-evenly">
         <div class="button-group d-flex flex-wrap mb-3">
-
           <button v-for="service in store.services" :key="service.id"
             :class="['service-button', 'styled-input', { 'selected': selectedServices.includes(service.id) }]"
             @click="toggleService(service.id)">
             {{ service.name }}
           </button>
-          
         </div>
       </div>
       <div class="filters-wrapper">
         <div class="filters d-flex flex-wrap justify-content-center">
           <div class="form-group text-center me-4">
-            <span >number of beds:</span>
-            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minBeds" @change="applyFilters" min="1" max="15">
+            <span>number of beds:</span>
+            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minBeds"
+              @change="applyFilters" min="1" max="15">
           </div>
           <div class="form-group text-center">
             <span>number of rooms:</span>
-            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minRooms" @change="applyFilters" min="1" max="15">
+            <input type="number" class="form-control styled-input" placeholder="1" v-model.number="minRooms"
+              @change="applyFilters" min="1" max="15">
           </div>
         </div>
       </div>
@@ -156,7 +156,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/styles/partials/variables.scss";
+.filters-wrapper {
+  display: flex;
+  flex-direction: column;
 
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+}
 #results-container {
   margin-top: 200px;
   margin-bottom: 50px;
@@ -286,13 +294,5 @@ input::placeholder {
   color: white;
 }
 
-@media screen and (max-width: 768px) {
-  .filters {
-    flex-direction: column;
-  }
 
-  .service-button {
-    flex: 1 1 100%;
-  }
-}
 </style>
