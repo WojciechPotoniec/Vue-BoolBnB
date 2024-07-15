@@ -2,7 +2,7 @@
   <div id="search">
     <SearchbarComponent />
   </div>
-  <div id="results-container" class="">
+  <div id="results-container">
     <div class="mt-5 pt-5 container" id="results">
       <!-- <h1 class="mt-3">Results</h1> -->
       <h4 class="ml-3">Filters:</h4>
@@ -158,6 +158,8 @@ export default {
 
 #results-container {
   margin-top: 200px;
+  margin-bottom: 50px;
+  animation: fadeIn 1s ease-out;
 }
 
 @keyframes fadeIn {
@@ -173,7 +175,6 @@ export default {
 }
 
 #results {
- 
   animation: fadeIn 1s ease-out;
 }
 
