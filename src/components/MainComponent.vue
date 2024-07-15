@@ -2,12 +2,12 @@
   <main>
     <div class="container">
       <div class="m-3 pt-4 mx-5 ">
-        <h3 id="main-title">La Selezione di Boolbnb</h3>
+        <h3 id="main-title" class="text-center">The Boolbnb Selection</h3>
         <div class="d-flex flex-wrap">
-          <div class="reservation-info w-50">
-            <p>Che sia al mare, in Montagna o in città, dai un'occhiata alle <strong>proposte di questa
-                settimana,</strong>
-              innamorati di un luogo dove puoi passare le tue vacanze e contatta il proprietario</p>
+          <div class="reservation-info w-50 text-center">
+            <p>Whether at the seaside, in the mountains or in the city, take a look at the <strong>proposals here
+                week</strong>
+              fall in love with a place where you can spend your holidays and contact the owner</p>
           </div>
         </div>
       </div>
@@ -100,6 +100,9 @@ export default {
 
 <style lang="scss" scoped>
 @use "../assets/styles/partials/variables" as *;
+.reservation-info {
+  margin: 0 auto;
+}
 
 img {
   display: block;
