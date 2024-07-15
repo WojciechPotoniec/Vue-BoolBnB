@@ -31,7 +31,8 @@
       </div>
       <div class="row mt-3">
         <h2>Results for {{ capitalizedDestination }}</h2>
-        <p>The number of apartments for your search are: {{ store.apartmentsFiltered.length }}</p>
+        <p v-if="store.apartmentsFiltered.length === 0">No results for your search</p>
+        <p v-else>The number of apartments for your search are: {{ store.apartmentsFiltered.length }}</p>
         <div class="col-12 col-xl-4 col-lg-6" v-for="(apartment, index) in store.apartmentsFiltered" :key="index">
           <CardComponent :card="apartment" :getOneImg="getOneImg" :viewCount="viewCount" />
         </div>
@@ -160,6 +161,10 @@ export default {
   margin-top: 200px;
   margin-bottom: 50px;
   animation: fadeIn 1s ease-out;
+
+  @media (max-width: 768px) {
+    margin-top: 250px;
+  }
 }
 
 @keyframes fadeIn {
