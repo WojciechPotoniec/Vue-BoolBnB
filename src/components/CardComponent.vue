@@ -1,7 +1,7 @@
 <template>
-  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }"  @click="viewCount(card)">
-    <div class="container stack">
-      <div class="card">
+  <RouterLink :to="{ name: 'apartment', params: { slug: card.slug } }" @click="viewCount(card)">
+    <div class="container">
+      <div class="apartments-card">
         <div class="image">
           <img :src="getOneImg(card)" class="card-img-top" :alt="card.title" @error="handleImageError" />
           <div class="text">{{ card.title }}</div>
@@ -13,7 +13,7 @@
             <span class="beds">{{ card.beds_num }} beds</span>
             <span class="bathrooms">{{ card.bathrooms_num }} bathrooms</span>
             <span class="area">{{ card.square_meters }} m²</span>
-            <span class="area" v-if="isValidDistance(card.distance)">Distance: {{formatDistance(card.distance) }} km</span>
+            <span class="area" v-if="isValidDistance(card.distance)">Distance: {{ formatDistance(card.distance) }} km</span>
           </div>
         </div>
       </div>
@@ -44,13 +44,12 @@ export default {
     },
   },
   methods: {
-
     handleImageError(event) {
       event.target.src = "public/img/appartamento2.jpg"; // Fallback image URL
     },
     formatDistance(value) {
       if (value == null || isNaN(value)) {
-        return "N/A" ;
+        return "N/A";
       }
       return parseFloat(value).toFixed(2);
     },
@@ -74,85 +73,25 @@ img {
   object-fit: cover;
 }
 
-.stack {
-  width: 85%;
-  max-width: 350px;
-  padding: 20px;
-  transition: 0.3s ease;
-  margin: 20px auto;
-
-  // &:hover {
-  //   transform: rotate(3deg);
-
-  //   .card:before {
-  //     transform: translateY(-2%) rotate(-3deg);
-  //   }
-
-  //   .card:after {
-  //     transform: translateY(2%) rotate(3deg);
-  //   }
-  // }
-}
-
-.card {
+.apartments-card {
   color: $white;
-  aspect-ratio: 3 / 2;
-  //border: 2px solid $secondary-gold;
-  border-radius: 15px;
-  box-shadow: 10px 10px 20px $primary-bg;
-  //background: linear-gradient(to bottom, rgba(grey, 0.9), rgba(rgba(198, 193, 193, 0.731), 0.9));
-  position: relative;
   transition: 0.2s ease;
   cursor: pointer;
-  padding: 15px;
-  width: 400px;
-  height: 350px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid transparent;
 
-  &:hover {
-    transform: scale(1.05);
-    transition: 1s;
-
-    .text {
-      color: $secondary-gold;
-      transition: 0.2s ease;
-    }
+  &:hover,
+  &:focus {
+    transition: 0.2s ease;
+    border-color: $primary-bg;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-
-  // &:before,
-  // &:after {
-  //   content: "";
-  //   display: block;
-  //   position: absolute;
-  //   height: 100%;
-  //   width: 100%;
-  //   border: 2px solid $secondary-gold;
-  //   border-radius: 15px;
-  //   background-color: black;
-  //   background-size: cover;
-  //   background-position: center;
-  //   background-repeat: no-repeat;
-  //   opacity: 0.4;
-  //   transform-origin: center center;
-  //   z-index: -1;
-  //   transition: 0.2s ease;
-  //   top: 0;
-  //   left: 0;
-  // }
-
-  // &:before {
-  //   transform: translateY(-3%) rotate(-4deg);
-  // }
-
-  // &:after {
-  //   transform: translateY(3%) rotate(4deg);
-  // }
 }
 
 .image {
   width: 100%;
-  //border: 2px solid $secondary-gold;
   border-radius: 15px;
-  aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
   background: $white;
@@ -160,11 +99,9 @@ img {
   img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 300px;
   }
 }
-
 .text {
   color: $white;
   position: absolute;
